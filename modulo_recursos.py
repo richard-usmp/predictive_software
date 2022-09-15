@@ -206,7 +206,6 @@ class Window_recursos(QMainWindow):
         descripcion_app = "'"+self.cmb_producto_BD.currentText+"'"
         descripcion_DB = self.datosTotal.getMaterial(descripcion_app)
         ID_material= self.datosTotal.getID_Material(descripcion_app)
-        print("ID_material: "+str(ID_material))
 
         if(self.cmb_producto_BD.currentIndex==-1):
             print("Seleccionar item a modificar.")
@@ -220,6 +219,7 @@ class Window_recursos(QMainWindow):
                 Estado = "Resta"
 
             if(descripcion_DB == Descripcion):
+                Precio_compra_unit=0
                 self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
                 print("Stock actualizado!")
@@ -232,6 +232,7 @@ class Window_recursos(QMainWindow):
             print("Seleccionar item a modificar.")
         elif(self.costo.text!=""):
             if(descripcion_DB == Descripcion):
+                Stock=0
                 Estado="Cambio de precio"
                 self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
