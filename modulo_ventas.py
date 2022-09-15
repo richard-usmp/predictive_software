@@ -111,7 +111,7 @@ class Window_ventas(QMainWindow):
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)
 
-        self.tabla.resize(700, 240)
+        self.tabla.resize(800, 260)
         self.tabla.move(50, 50)
         #boton mostrar datos
         self.boton_mostrar_datos = QPushButton(self.fr_contenedor_abajo)

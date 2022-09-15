@@ -140,7 +140,7 @@ class Window_proveedores(QMainWindow):
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla_proveedores.setColumnWidth(indice, ancho)
 
-        self.tabla_proveedores.resize(700, 240)
+        self.tabla_proveedores.resize(800, 260)
         self.tabla_proveedores.move(50, 50)
         #boton mostrar datos
         self.boton_mostrar_proveedor = QPushButton(self.fr_contenedor_abajo)
