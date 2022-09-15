@@ -32,6 +32,14 @@ class Registro_datos():
         self.conexion.commit()    
         cur.close()
 
+    def insertar_log_material(self, ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado):
+        cur = self.conexion.cursor()
+        sql='''INSERT INTO dbo.Material_log
+        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
+        cur.execute(sql)
+        self.conexion.commit()    
+        cur.close()
+
     def getMaterial(self, descripcion):
         descripcion_=""
         cursor = self.conexion.cursor()
@@ -41,6 +49,16 @@ class Registro_datos():
         for row in descripcion_fetch:
             descripcion_ = row[0]
         return descripcion_
+
+    def getID_Material(self, descripcion):
+        id_=""
+        cursor = self.conexion.cursor()
+        sql = "SELECT ID_material FROM dbo.Material where Descripcion = {}".format(descripcion) 
+        cursor.execute(sql)
+        id_fetch = cursor.fetchall()
+        for row in id_fetch:
+            id_ = row[0]
+        return id_
     
     def actualizar_stock_material(self, stock, desc):
         cur = self.conexion.cursor()
@@ -81,10 +99,10 @@ class Registro_datos():
         registro = cursor.fetchall()
         return registro
 
-    def inserta_proveedor(self, empresa, representante, ruc, celular, email):
+    def inserta_proveedor(self, empresa, representante, ruc, celular, email, tipo):
         cur = self.conexion.cursor()
-        sql='''INSERT INTO dbo.Proveedor (Nombre_empresa, Representante, RUC, Celular, Email) 
-        VALUES('{}', '{}', '{}', '{}', '{}')'''.format(empresa, representante, ruc, celular, email)
+        sql='''INSERT INTO dbo.Proveedor (Nombre_empresa, Representante, RUC, Celular, Email, Tipo) 
+        VALUES('{}', '{}', '{}', '{}', '{}', '{}')'''.format(empresa, representante, ruc, celular, email, tipo)
         cur.execute(sql)
         self.conexion.commit()    
         cur.close()

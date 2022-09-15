@@ -89,10 +89,16 @@ class Window_proveedores(QMainWindow):
         self.email.alignment = Qt.AlignCenter
         self.email.styleSheet = "color: gray; font-size: 15px;"
 
+        self.tipo = QLineEdit(self.fr_contenedor_arriba)
+        self.tipo.placeholderText= "Tipo Proveedor"
+        self.tipo.geometry = QRect(10,250, 395,20)
+        self.tipo.alignment = Qt.AlignCenter
+        self.tipo.styleSheet = "color: gray; font-size: 15px;"
+
         self.boton_ingresar_proveedor = QPushButton(self.fr_contenedor_arriba)
         self.boton_ingresar_proveedor.text = "Registrar"
         self.boton_ingresar_proveedor.clicked.connect(self.insertarDatosBD)
-        self.boton_ingresar_proveedor.geometry = QRect(350, 250, 170, 45)
+        self.boton_ingresar_proveedor.geometry = QRect(350, 290, 170, 45)
         self.boton_ingresar_proveedor.styleSheet = "background: white; font-size: 15px;"
 
         #seccion de eliminar
@@ -105,7 +111,7 @@ class Window_proveedores(QMainWindow):
         self.boton_eliminar_proveedor = QPushButton(self.fr_contenedor_arriba)
         self.boton_eliminar_proveedor.text = "Eliminar"
         self.boton_eliminar_proveedor.clicked.connect(self.eliminarProveedor)
-        self.boton_eliminar_proveedor.geometry = QRect(520, 250, 170, 45)
+        self.boton_eliminar_proveedor.geometry = QRect(520, 290, 170, 45)
         self.boton_eliminar_proveedor.styleSheet = "background: white; font-size: 15px;"
 
         
@@ -165,25 +171,27 @@ class Window_proveedores(QMainWindow):
             row += 1
 
     def insertarDatosBD(self):
-        if(self.nombre_empresa.text!="" or self.representante.text!="" or self.ruc.text!="" or self.celular.text!="" or self.email.text!=""):
+        if(self.nombre_empresa.text!="" or self.representante.text!="" or self.ruc.text!="" or self.celular.text!="" or self.email.text!="" or self.tipo.text!=""):
             empresa = self.nombre_empresa.text
             representante = self.representante.text
             ruc = self.ruc.text
             celular = self.celular.text
             email = self.email.text
+            tipo = self.tipo.text
 
-            self.datosTotal.inserta_proveedor(empresa, representante, ruc, celular, email)	
+            self.datosTotal.inserta_proveedor(empresa, representante, ruc, celular, email, tipo)	
             print("Dato insertado!")
             self.nombre_empresa.clear()
             self.representante.clear()
             self.ruc.clear()
             self.celular.clear()
             self.email.clear()
+            self.tipo.clear()
         else:
             print("Escribir datos del proveedor a insertar.")
 
     def eliminarProveedor(self):
-        if(self.cmb_proveedor_BD.currentIndex==-1):
+        if(self.cmb_proveedor_BD.currentIndex!=-1):
             proveedor_app = "'"+self.cmb_proveedor_BD.currentText+"'"
             self.datosTotal.elimina_proveedor(proveedor_app)
             print("¡Proveedor eliminado! Actualice la tabla para visualizar el cambio.")

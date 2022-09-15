@@ -171,9 +171,6 @@ class Window_recursos(QMainWindow):
 
     def insertarDatosBD(self):
         if(self.nombre_producto.text!="" or self.unid_medida.text!="" or self.cantidad_entrante.text!="" or self.costo.text!=""):
-            #descripcion_app = str("'"+self.nombre_producto.text+"'")
-            #descripcion_DB = self.datosTotal.getMaterial(descripcion_app)
-
             Descripcion = self.nombre_producto.text
             Unid_medida = self.unid_medida.text
             Stock = self.cantidad_entrante.text
@@ -181,8 +178,14 @@ class Window_recursos(QMainWindow):
             Dia = today.strftime("%d")
             Mes = today.strftime("%B")
             Anio = today.strftime("%Y")
+            Estado = "Nuevo"
 
-            self.datosTotal.inserta_material(Descripcion, Unid_medida, Stock, Precio_compra_unit, Mes, Anio)	
+            self.datosTotal.inserta_material(Descripcion, Unid_medida, Stock, Precio_compra_unit, Mes, Anio)
+
+            descripcion_app = "'"+self.nombre_producto.text+"'"
+            ID_material= self.datosTotal.getID_Material(descripcion_app)
+
+            self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
             print("Dato insertado!")
             self.nombre_producto.clear()
             self.unid_medida.clear()
@@ -195,9 +198,15 @@ class Window_recursos(QMainWindow):
         Stock = self.cantidad_entrante.text
         Precio_compra_unit = self.costo.text
         Descripcion = self.cmb_producto_BD.currentText
+        Dia = today.strftime("%d")
+        Mes = today.strftime("%B")
+        Anio = today.strftime("%Y")
+        Estado=""
 
         descripcion_app = "'"+self.cmb_producto_BD.currentText+"'"
         descripcion_DB = self.datosTotal.getMaterial(descripcion_app)
+        ID_material= self.datosTotal.getID_Material(descripcion_app)
+        print("ID_material: "+str(ID_material))
 
         if(self.cmb_producto_BD.currentIndex==-1):
             print("Seleccionar item a modificar.")
@@ -205,11 +214,14 @@ class Window_recursos(QMainWindow):
             get_stock = self.datosTotal.getStock(descripcion_app)
             if(self.cmb_sumar_restar.currentIndex==-1 or self.cmb_sumar_restar.currentIndex==0):
                 Stock_sumado = get_stock + decimal(Stock)
+                Estado = "Suma"
             else:
                 Stock_sumado = get_stock - decimal(Stock)
+                Estado = "Resta"
 
             if(descripcion_DB == Descripcion):
                 self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion)
+                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
                 print("Stock actualizado!")
             else:
                 print("Else de modificarDatosBD:actualizar_stock_material")
@@ -220,7 +232,9 @@ class Window_recursos(QMainWindow):
             print("Seleccionar item a modificar.")
         elif(self.costo.text!=""):
             if(descripcion_DB == Descripcion):
+                Estado="Cambio de precio"
                 self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit)
+                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
                 print("Precio actualizado!")
             else:
                 print("Else de modificarDatosBD:actualizar_precio_material")
