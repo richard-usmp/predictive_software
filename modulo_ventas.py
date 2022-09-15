@@ -130,15 +130,15 @@ class Window_ventas(QMainWindow):
         for endian in datos:
             self.tabla.rowCount=row + 1
             
-            idDato = QTableWidgetItem(endian[0])
+            idDato = QTableWidgetItem(str(endian[0]))
             idDato.setTextAlignment(4)
             
             self.tabla.setItem(row, 0, idDato)
-            self.tabla.setItem(row, 1, QTableWidgetItem(endian[1]))
-            self.tabla.setItem(row, 2, QTableWidgetItem(endian[2]))
-            self.tabla.setItem(row, 3, QTableWidgetItem(endian[3]))
-            self.tabla.setItem(row, 4, QTableWidgetItem(endian[4]))
-            self.tabla.setItem(row, 5, QTableWidgetItem(endian[5]))
+            self.tabla.setItem(row, 1, QTableWidgetItem(str(endian[1])))
+            self.tabla.setItem(row, 2, QTableWidgetItem(str(endian[2])))
+            self.tabla.setItem(row, 3, QTableWidgetItem(str(endian[3])))
+            self.tabla.setItem(row, 4, QTableWidgetItem(str(endian[4])))
+            self.tabla.setItem(row, 5, QTableWidgetItem(str(endian[5])))
 
             row += 1
     
@@ -153,8 +153,8 @@ class Window_ventas(QMainWindow):
 
             self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio)
             print("Venta insertada!")
-            self.input_dni.clear
-            self.input_producto.clear
-            self.input_cantidad.clear
+            self.input_dni.clear()
+            self.input_producto.clear()
+            self.input_cantidad.clear()
         else:
             print("Escribir item a insertar.")

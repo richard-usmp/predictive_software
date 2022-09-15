@@ -156,14 +156,14 @@ class Window_recursos(QMainWindow):
         for endian in datos:
             self.tabla_recursos.rowCount=row + 1
             
-            idDato = QTableWidgetItem(endian[0])
+            idDato = QTableWidgetItem(str(endian[0]))
             idDato.setTextAlignment(4)
             
             self.tabla_recursos.setItem(row, 0, idDato)
             self.tabla_recursos.setItem(row, 1, QTableWidgetItem(endian[1]))
             self.tabla_recursos.setItem(row, 2, QTableWidgetItem(endian[2]))
-            self.tabla_recursos.setItem(row, 3, QTableWidgetItem(int(endian[3])))
-            self.tabla_recursos.setItem(row, 4, QTableWidgetItem(int(endian[4])))
+            self.tabla_recursos.setItem(row, 3, QTableWidgetItem(str(endian[3])))
+            self.tabla_recursos.setItem(row, 4, QTableWidgetItem(str(endian[4])))
             self.tabla_recursos.setItem(row, 5, QTableWidgetItem(endian[5]))
             self.tabla_recursos.setItem(row, 6, QTableWidgetItem(endian[6]))
 
@@ -178,15 +178,16 @@ class Window_recursos(QMainWindow):
             Unid_medida = self.unid_medida.text
             Stock = self.cantidad_entrante.text
             Precio_compra_unit = self.costo.text
+            Dia = today.strftime("%d")
             Mes = today.strftime("%B")
             Anio = today.strftime("%Y")
 
             self.datosTotal.inserta_material(Descripcion, Unid_medida, Stock, Precio_compra_unit, Mes, Anio)	
             print("Dato insertado!")
-            self.nombre_producto.clear
-            self.unid_medida.clear
-            self.cantidad_entrante.clear
-            self.costo.clear
+            self.nombre_producto.clear()
+            self.unid_medida.clear()
+            self.cantidad_entrante.clear()
+            self.costo.clear()
         else:
             print("Escribir item a insertar.")
 

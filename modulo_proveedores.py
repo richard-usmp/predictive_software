@@ -152,7 +152,7 @@ class Window_proveedores(QMainWindow):
         for endian in datos:
             self.tabla_proveedores.rowCount=row + 1
             
-            idDato = QTableWidgetItem(endian[0])
+            idDato = QTableWidgetItem(str(endian[0]))
             idDato.setTextAlignment(4)
             
             self.tabla_proveedores.setItem(row, 0, idDato)
@@ -174,11 +174,11 @@ class Window_proveedores(QMainWindow):
 
             self.datosTotal.inserta_proveedor(empresa, representante, ruc, celular, email)	
             print("Dato insertado!")
-            self.nombre_empresa.clear
-            self.representante.clear
-            self.ruc.clear
-            self.celular.clear
-            self.email.clear
+            self.nombre_empresa.clear()
+            self.representante.clear()
+            self.ruc.clear()
+            self.celular.clear()
+            self.email.clear()
         else:
             print("Escribir datos del proveedor a insertar.")
 

@@ -15,11 +15,11 @@ class Window_main(QMainWindow):
         self.fr_titulo.geometry=QRect(10,10,295, 700)
         self.fr_titulo.styleSheet="background: white;"
         #texto del titulo
-        self.titulo = QLabel(self.fr_titulo)
-        self.titulo.text = "¡Hola Admin01!" 
-        self.titulo.geometry = QRect(0,20, 295,30)
-        self.titulo.alignment = Qt.AlignCenter
-        self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+        #self.titulo = QLabel(self.fr_titulo)
+        #self.titulo.text = "" 
+        #self.titulo.geometry = QRect(0,20, 295,30)
+        #self.titulo.alignment = Qt.AlignCenter
+        #self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
         #botones de las pestañas
         self.boton1 = QPushButton(self.fr_titulo)
         self.boton1.text = "Dashboard"
@@ -54,13 +54,6 @@ class Window_main(QMainWindow):
         self.fr_titulo_dialogo = QFrame(self.dialogo)
         self.fr_titulo_dialogo.geometry = QRect(10,10, 280, 100)
         self.fr_titulo_dialogo.styleSheet = "background: black;"
-
-        #input
-        #self.hipervinculo_pestanhas = QLineEdit(self.fr_titulo)
-        #self.hipervinculo_pestanhas.placeholderText= "Ingrese..."
-        #self.hipervinculo_pestanhas.geometry = QRect(10,70, 395,20)
-        #self.hipervinculo_pestanhas.alignment = Qt.AlignCenter
-        #self.hipervinculo_pestanhas.styleSheet = "color: gray; font-size: 15px;"
 
         #contenedor arriba
         self.fr_contenedor_arriba = QFrame(self)
@@ -138,3 +131,11 @@ class Window_main(QMainWindow):
             self.tabla.setItem(row, 5, QTableWidgetItem(endian[5]))
 
             row += 1
+
+    def setup_name_user(self, username):
+        self.titulo = QLabel(self)
+        self.titulo.text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 
+        self.titulo.geometry = QRect(0,20, 295,30)
+        self.titulo.alignment = Qt.AlignCenter
+        self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+        self.titulo.setText(f"¡Hola {username}!!!!!!!!!")
