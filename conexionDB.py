@@ -125,20 +125,28 @@ class Registro_datos():
     #ventas
     def buscar_ventas(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT * FROM dbo.Ventas" 
+        sql = "SELECT ID_Venta,DNI_cliente,Cant_Total_Productos_Vendidos,Dia,Mes,Anio FROM dbo.Ventas" 
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro
 
-    def inserta_ventas(self, dni, cantidad, Dia, Mes, Anio):
+    def inserta_ventas(self, dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha):
         cur = self.conexion.cursor()
         sql='''INSERT INTO dbo.Ventas
-        VALUES('{}', '{}', '{}', '{}', '{}')'''.format(dni, cantidad, Dia, Mes, Anio)
+        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha)
         cur.execute(sql)
         self.conexion.commit()    
         cur.close()
 
-
+    def get_total_productos_vendidos(self, Año_y_mes):
+        total_productos_vendidos=""
+        cursor = self.conexion.cursor()
+        sql = "SELECT top 1 (Total_Prod_Vendidos) FROM dbo.Ventas WHERE Fecha='{}' ORDER BY Total_Prod_Vendidos DESC".format(Año_y_mes) 
+        cursor.execute(sql)
+        total_productos_vendidos_fetch = cursor.fetchall()
+        for row in total_productos_vendidos_fetch:
+            total_productos_vendidos = row[0]
+        return total_productos_vendidos
 
 
     def getUser(self, user):

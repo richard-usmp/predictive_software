@@ -148,10 +148,19 @@ class Window_ventas(QMainWindow):
             producto = self.input_producto.text
             cantidad = self.input_cantidad.text
             Dia = today.strftime("%d")
-            Mes = today.strftime("%B")
+            Mes = today.strftime("%m")
             Anio = today.strftime("%Y")
+            Año_y_mes = str(Anio + "-" + Mes)
+            tot_prod_ven = self.datosTotal.get_total_productos_vendidos(Año_y_mes)
 
-            self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio)
+
+            if(tot_prod_ven==""):
+                tot_prod_ven = 0
+                total_prod_vendidos = int(tot_prod_ven) + int(cantidad)
+            else:
+                total_prod_vendidos = int(tot_prod_ven) + int(cantidad)
+
+            self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, Año_y_mes)
             print("Venta insertada!")
             self.input_dni.clear()
             self.input_producto.clear()
