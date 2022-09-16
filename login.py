@@ -3,13 +3,11 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 import sys
-from main import Window_main
 from __feature__ import true_property
 from conexionDB import Registro_datos
 
 class Window_login(QMainWindow):
         def setupUi(self):
-            self.main = Window_main()
             self.datosTotal = Registro_datos()
 
             self.setFixedSize(1280, 720)
@@ -44,7 +42,6 @@ class Window_login(QMainWindow):
             self.boton_login.text = "INGRESAR"
 
             self.boton_login.clicked.connect(self.checklogin)
-            self.boton_login.clicked.connect(self.main.setup_name_user(self.titulo.text))
 
         signalLogin = False
         def checklogin(self):

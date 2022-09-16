@@ -1,11 +1,14 @@
+from ctypes import alignment
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-
+from conexionDB import *
 import sys
 from __feature__ import true_property
 
 class Window_main(QMainWindow):
     def setupUi(self):
+        self.datosTotal = Registro_datos()
+
         self.setFixedSize(1280, 720)
         self.styleSheet="background: gray;"
         self.setWindowTitle("JR Group SAC - Predictive Software")
@@ -14,12 +17,10 @@ class Window_main(QMainWindow):
         self.fr_titulo = QFrame(self)
         self.fr_titulo.geometry=QRect(10,10,295, 700)
         self.fr_titulo.styleSheet="background: white;"
-        #texto del titulo
-        #self.titulo = QLabel(self.fr_titulo)
-        #self.titulo.text = "" 
-        #self.titulo.geometry = QRect(0,20, 295,30)
-        #self.titulo.alignment = Qt.AlignCenter
-        #self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+        #contenedor de bienvenida
+        self.fr_bienvenida = QFrame(self)
+        self.fr_bienvenida.geometry=QRect(10,10,295, 45)
+        self.fr_bienvenida.styleSheet="background: white;"
         #botones de las pestañas
         self.boton1 = QPushButton(self.fr_titulo)
         self.boton1.text = "Dashboard"
@@ -91,7 +92,7 @@ class Window_main(QMainWindow):
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)
 
-        self.tabla.resize(700, 240)
+        self.tabla.resize(800, 260)
         self.tabla.move(50, 50)
         #boton mostrar datos
         self.boton_mostrar_datos = QPushButton(self.fr_contenedor_abajo)
@@ -101,18 +102,7 @@ class Window_main(QMainWindow):
         self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
     
     def datosTabla(self):
-        datos = [("1", "Andres", "Niño", "Masculino", "06/12/2019", "Colombia"),
-                 ("2", "Donald", "Trump", "Masculino", "06/12/1950", "Estados Unidos"),
-                 ("3", "María Fernanda", "Espinosa", "Femenino", "06/10/1980", "Ecuador"),
-                 ("4", "Alberto", "Canosa", "Masculino", "04/05/1876", "España"),
-                 ("5", "Virtud", "Pontes", "Femenino", "23/18/1965", "España"),
-                 ("6", "Elon", "Musk", "Masculino", "06/12/1960", "Estados Unidos"),
-                 ("7", "Richard", "Branson", "Masculino", "14/12/1956", "Reino Unido"),
-                 ("8", "Gabriel", "Garcia Marquez", "Masculino", "19/11/1948", "Colombia"),
-                 ("9", "Valentina", "Tereshkova", "Femenino", "06/03/1937", "Rusia"),
-                 ("10", "Artur", "Fischer", "Masculino", "31/12/1919", "Alemania"),
-                 ("11", "Grace", "Murray Hopper", "Femenino", "09/12/1906", "Estados Unidos"),
-                 ("12", "Guido van", "Rossum", "Masculino", "31/01/1956", "Países Bajos")]
+        datos = self.datosTotal.buscar_material()
 
         self.tabla.clearContents()
 
@@ -120,22 +110,24 @@ class Window_main(QMainWindow):
         for endian in datos:
             self.tabla.rowCount=row + 1
             
-            idDato = QTableWidgetItem(endian[0])
+            idDato = QTableWidgetItem(str(endian[0]))
             idDato.setTextAlignment(4)
             
             self.tabla.setItem(row, 0, idDato)
             self.tabla.setItem(row, 1, QTableWidgetItem(endian[1]))
             self.tabla.setItem(row, 2, QTableWidgetItem(endian[2]))
-            self.tabla.setItem(row, 3, QTableWidgetItem(endian[3]))
-            self.tabla.setItem(row, 4, QTableWidgetItem(endian[4]))
+            self.tabla.setItem(row, 3, QTableWidgetItem(str(endian[3])))
+            self.tabla.setItem(row, 4, QTableWidgetItem(str(endian[4])))
             self.tabla.setItem(row, 5, QTableWidgetItem(endian[5]))
+            self.tabla.setItem(row, 6, QTableWidgetItem(endian[6]))
 
             row += 1
 
     def setup_name_user(self, username):
-        self.titulo = QLabel(self)
-        self.titulo.text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" 
-        self.titulo.geometry = QRect(0,20, 295,30)
-        self.titulo.alignment = Qt.AlignCenter
-        self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
-        self.titulo.setText(f"¡Hola {username}!!!!!!!!!")
+        self.titulo = QLabel(f"Bienvenido {username}", alignment = Qt.AlignCenter)
+        self.titulo.styleSheet = "color: gray; font-size: 21px; font-weight: bold;"
+
+        self.titulo_layout = QVBoxLayout()
+        self.titulo_layout.addWidget(self.titulo)
+
+        self.fr_bienvenida.setLayout(self.titulo_layout)

@@ -67,6 +67,7 @@ class predictive_software:
         if(self.login.signalLogin):
             self.login.hide()
             self.main.show()
+            self.main.setup_name_user(self.login.usuario.text)
         else:
             self.login.show()
             
@@ -78,6 +79,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.main.show()
+        self.main.setup_name_user(self.login.usuario.text)
     
     def entrar_Proveedores(self):
         self.main.hide()
@@ -86,6 +88,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.modulo_proveedores.show()
+        self.modulo_proveedores.setup_name_user(self.login.usuario.text)
 
     def entrar_Recursos(self):
         self.main.hide()
@@ -94,6 +97,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.modulo_recursos.show()
+        self.modulo_recursos.setup_name_user(self.login.usuario.text)
     
     def entrar_Ventas(self):
         self.main.hide()
@@ -102,6 +106,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.modulo_ventas.show()
+        self.modulo_ventas.setup_name_user(self.login.usuario.text)
     
     def entrar_Consultas(self):
         self.main.hide()
@@ -110,6 +115,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.modulo_consultas_SQ.show()
+        self.modulo_consultas_SQ.setup_name_user(self.login.usuario.text)
 
 app = QApplication(sys.argv)
 

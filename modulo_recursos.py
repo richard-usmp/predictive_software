@@ -20,12 +20,10 @@ class Window_recursos(QMainWindow):
         self.fr_titulo = QFrame(self)
         self.fr_titulo.geometry=QRect(10,10,295, 700)
         self.fr_titulo.styleSheet="background: white;"
-        #texto del titulo
-        self.titulo = QLabel(self.fr_titulo)
-        self.titulo.text = "¡Hola Admin01!"  
-        self.titulo.geometry = QRect(0,20, 295,30)
-        self.titulo.alignment = Qt.AlignCenter
-        self.titulo.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+        #contenedor de bienvenida
+        self.fr_bienvenida = QFrame(self)
+        self.fr_bienvenida.geometry=QRect(10,10,295, 45)
+        self.fr_bienvenida.styleSheet="background: white;"
         #botones de las pestañas
         self.boton1 = QPushButton(self.fr_titulo)
         self.boton1.text = "Dashboard"
@@ -241,3 +239,13 @@ class Window_recursos(QMainWindow):
                 print("Else de modificarDatosBD:actualizar_precio_material")
         else:
             print("Escribir costo del item a modificar.")
+
+
+    def setup_name_user(self, username):
+        self.titulo = QLabel(f"Bienvenido {username}", alignment = Qt.AlignCenter)
+        self.titulo.styleSheet = "color: gray; font-size: 21px; font-weight: bold;"
+
+        self.titulo_layout = QVBoxLayout()
+        self.titulo_layout.addWidget(self.titulo)
+
+        self.fr_bienvenida.setLayout(self.titulo_layout)
