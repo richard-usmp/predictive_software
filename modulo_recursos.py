@@ -145,6 +145,12 @@ class Window_recursos(QMainWindow):
         self.boton_mostrar_datos.geometry = QRect(300, 0, 200,45)
         self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
 
+        #boton mostrar historial
+        self.boton_mostrar = QPushButton(self.fr_contenedor_abajo)
+        self.boton_mostrar.text = "Abrir historial"
+        self.boton_mostrar.geometry = QRect(550, 0, 200,45)
+        self.boton_mostrar.styleSheet = "background: white; font-size: 15px;"
+
     def datosTabla(self):
         datos = self.datosTotal.buscar_material()
 

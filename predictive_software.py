@@ -4,6 +4,7 @@ from modulo_consultas_SQ import Window_consultas_SQ
 from modulo_proveedores import Window_proveedores
 from modulo_recursos import Window_recursos
 from modulo_ventas import Window_ventas
+from modulo_log_materiales import Window_material_log
 import sys
 from PySide6.QtWidgets import QApplication
 from conexionDB import *
@@ -20,6 +21,7 @@ class predictive_software:
         self.modulo_proveedores = Window_proveedores()
         self.modulo_recursos = Window_recursos()
         self.modulo_ventas = Window_ventas()
+        self.modulo_material_log = Window_material_log()
 
         self.login.setupUi()
         self.main.setupUi()
@@ -27,8 +29,7 @@ class predictive_software:
         self.modulo_proveedores.setupUi()
         self.modulo_recursos.setupUi()
         self.modulo_ventas.setupUi()
-
-        #usuario = self.login.usuario.text()
+        self.modulo_material_log.setupUi()
 
         #cambiar a ventanas
         self.login.boton_login.clicked.connect(self.logearse)
@@ -56,6 +57,7 @@ class predictive_software:
         self.modulo_recursos.boton3.clicked.connect(self.entrar_Recursos)
         self.modulo_recursos.boton4.clicked.connect(self.entrar_Ventas)
         self.modulo_recursos.boton5.clicked.connect(self.entrar_Consultas)
+        self.modulo_recursos.boton_mostrar.clicked.connect(self.entrar_Recursos_log)
 
         self.modulo_ventas.boton1.clicked.connect(self.entrar_dashboard)
         self.modulo_ventas.boton2.clicked.connect(self.entrar_Proveedores)
@@ -116,6 +118,13 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.modulo_consultas_SQ.show()
         self.modulo_consultas_SQ.setup_name_user(self.login.usuario.text)
+
+    def entrar_Recursos_log(self):
+        self.main.hide()
+        self.modulo_proveedores.hide()
+        self.modulo_ventas.hide()
+        self.modulo_consultas_SQ.hide()
+        self.modulo_material_log.show() 
 
 app = QApplication(sys.argv)
 

@@ -1,4 +1,5 @@
 import pyodbc
+import pandas as pd
 server = 'predictive-app.database.windows.net'
 database = 'predictiveapp'
 username = 'administrador'
@@ -88,7 +89,14 @@ class Registro_datos():
         stock_fetch = cursor.fetchall()
         for row in stock_fetch:
             stock_ = row[0]
-        return stock_    
+        return stock_
+
+    def buscar_Material_log(self):
+        cursor = self.conexion.cursor()
+        sql = "SELECT * FROM dbo.Material_log" 
+        cursor.execute(sql)
+        registro = cursor.fetchall()
+        return registro  
     
 
     #proveedores
@@ -168,4 +176,26 @@ class Registro_datos():
         for row in contra_fetch:
             contra = row[0]
         return contra
+    
+    def importCSV(self, ruta_de_csv):
+        data = pd.read_csv(f"{ruta_de_csv}")   
+        df = pd.DataFrame(data)
+        
+        cursor = self.conexion.cursor()
+        #format(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha)
+
+        for row in df.itertuples():
+            cursor.execute('''
+                INSERT INTO dbo.Ventas
+                VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')''',
+                row.DNI_cliente, 
+                row.CANT_TOTAL_PRODUCTOS_VENDIDOS, 
+                row.Dia, 
+                row.Mes, 
+                row.Anio, 
+                row.total_prod_vendidos, 
+                row.fecha
+            )
+        self.conexion.commit() 
+
 
