@@ -1,10 +1,13 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
+from conexionDB import *
 from __feature__ import true_property
 
 class Window_consultas_SQ(QMainWindow):
     def setupUi(self):
+        self.datosTotal = Registro_datos()
+
         self.setFixedSize(1280, 720)
         self.styleSheet="background: gray;"
         self.setWindowTitle("JR Group SAC - Predictive Software")
@@ -53,6 +56,54 @@ class Window_consultas_SQ(QMainWindow):
         self.texto_cont_arriba.geometry = QRect(10,0, 850,35)
         self.texto_cont_arriba.alignment = Qt.AlignJustify
         self.texto_cont_arriba.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+
+        #texto del contenedor abajo
+        self.texto_cont_abajo = QLabel(self.fr_contenedor_arriba)
+        self.texto_cont_abajo.text = "DataSet"  
+        self.texto_cont_abajo.geometry = QRect(10,0, 850,30)
+        self.texto_cont_abajo.alignment = Qt.AlignJustify
+        self.texto_cont_abajo.styleSheet = "color: blue; font-size: 25px;"
+        #tabla
+        self.tabla = QTableWidget(self.fr_contenedor_arriba)
+        self.tabla.dragDropOverwriteMode=False
+        self.tabla.selectionBehavior=QAbstractItemView.SelectRows
+        self.tabla.selectionMode=QAbstractItemView.SingleSelection
+        self.tabla.wordWrap=False
+        self.tabla.isSortingEnabled=False
+        self.tabla.alternatingRowColors=True
+        self.tabla.columnCount= 3
+        self.tabla.rowCount = 0
+        nombreColumnas = ("Id_venta", "Fecha", "Sumatoria de cantidad total de Productos Vendidos")
+        self.tabla.setHorizontalHeaderLabels(nombreColumnas)
+        for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
+            self.tabla.setColumnWidth(indice, ancho)
+
+        self.tabla.resize(800, 260)
+        self.tabla.move(50, 50)
+        #boton mostrar datos
+        self.boton_mostrar_datos = QPushButton(self.fr_contenedor_arriba)
+        self.boton_mostrar_datos.text = "Mostrar datos"
+        self.boton_mostrar_datos.clicked.connect(self.datosTabla)
+        self.boton_mostrar_datos.geometry = QRect(350, 0, 200,45)
+        self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
+
+    def datosTabla(self):
+        datos = self.datosTotal.buscar_dataset()
+
+        self.tabla.clearContents()
+
+        row = 0
+        for endian in datos:
+            self.tabla.rowCount=row + 1
+            
+            idDato = QTableWidgetItem(str(endian[0]))
+            idDato.setTextAlignment(4)
+            
+            self.tabla.setItem(row, 0, idDato)
+            self.tabla.setItem(row, 1, QTableWidgetItem(str(endian[1])))
+            self.tabla.setItem(row, 2, QTableWidgetItem(str(endian[2])))
+
+            row += 1
 
     def setup_name_user(self, username):
         self.titulo = QLabel(f"Bienvenido {username}", alignment = Qt.AlignCenter)

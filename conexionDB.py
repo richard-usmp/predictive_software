@@ -182,12 +182,11 @@ class Registro_datos():
         df = pd.DataFrame(data)
         
         cursor = self.conexion.cursor()
-        #format(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha)
 
         for row in df.itertuples():
             cursor.execute('''
                 INSERT INTO dbo.Ventas
-                VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')''',
+                VALUES(?, ?, ?, ?, ?, ?, ?)''',
                 row.DNI_cliente, 
                 row.CANT_TOTAL_PRODUCTOS_VENDIDOS, 
                 row.Dia, 
@@ -198,4 +197,9 @@ class Registro_datos():
             )
         self.conexion.commit() 
 
-
+    def buscar_dataset(self):
+        cursor = self.conexion.cursor()
+        sql = "SELECT ID_Venta, Fecha, Total_Prod_Vendidos FROM dbo.Ventas" 
+        cursor.execute(sql)
+        registro = cursor.fetchall()
+        return registro

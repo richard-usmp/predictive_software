@@ -1,6 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
+import os
 from conexionDB import *
 from datetime import date
 from __feature__ import true_property
@@ -82,6 +83,11 @@ class Window_ventas(QMainWindow):
         self.boton_ingresar_venta.text = "Registrar Venta"
         self.boton_ingresar_venta.clicked.connect(self.insertarDatosBD)
         self.boton_ingresar_venta.geometry = QRect(350, 250, 170, 45)
+        self.boton_ingresar_venta.styleSheet = "background: white; font-size: 15px;"
+
+        self.boton_ingresar_venta = QPushButton(self.fr_contenedor_arriba)
+        self.boton_ingresar_venta.text = "Importar CSV de ventas"
+        self.boton_ingresar_venta.geometry = QRect(530, 250, 170, 45)
         self.boton_ingresar_venta.styleSheet = "background: white; font-size: 15px;"
         
         #contenedor abajo
@@ -174,3 +180,7 @@ class Window_ventas(QMainWindow):
         self.titulo_layout.addWidget(self.titulo)
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
+
+
+    def abrir_archivo_csv(self):
+        archivo = QFileDialog
