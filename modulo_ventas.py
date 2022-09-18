@@ -61,11 +61,11 @@ class Window_ventas(QMainWindow):
         self.texto_cont_arriba.alignment = Qt.AlignJustify
         self.texto_cont_arriba.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
         #inputs
-        self.input_dni = QLineEdit(self.fr_contenedor_arriba)
-        self.input_dni.placeholderText= "DNI Cliente"
-        self.input_dni.geometry = QRect(10,50, 395,20)
-        self.input_dni.alignment = Qt.AlignCenter
-        self.input_dni.styleSheet = "color: gray; font-size: 15px;"
+        self.input_cod_venta = QLineEdit(self.fr_contenedor_arriba)
+        self.input_cod_venta.placeholderText= "Codigo de venta"
+        self.input_cod_venta.geometry = QRect(10,50, 395,20)
+        self.input_cod_venta.alignment = Qt.AlignCenter
+        self.input_cod_venta.styleSheet = "color: gray; font-size: 15px;"
 
         self.input_producto = QLineEdit(self.fr_contenedor_arriba)
         self.input_producto.placeholderText= "Producto"
@@ -110,7 +110,7 @@ class Window_ventas(QMainWindow):
         self.tabla.alternatingRowColors=True
         self.tabla.columnCount= 6
         self.tabla.rowCount = 0
-        nombreColumnas = ("Id", "DNI", "Cantidad Productos Vendidos", "Día", "Mes", "Año")
+        nombreColumnas = ("Id", "Cod. venta", "Cantidad Productos Vendidos", "Día", "Mes", "Año")
         self.tabla.setHorizontalHeaderLabels(nombreColumnas)
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)
@@ -147,8 +147,8 @@ class Window_ventas(QMainWindow):
             row += 1
     
     def insertarDatosBD(self):
-        if(self.input_dni.text!="" or self.input_producto.text!="" or self.input_cantidad.text!=""):
-            dni = self.input_dni.text
+        if(self.input_cod_venta.text!="" or self.input_producto.text!="" or self.input_cantidad.text!=""):
+            dni = self.input_cod_venta.text
             producto = self.input_producto.text
             cantidad = self.input_cantidad.text
             Dia = today.strftime("%d")
@@ -166,7 +166,7 @@ class Window_ventas(QMainWindow):
 
             self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, Año_y_mes)
             print("Venta insertada!")
-            self.input_dni.clear()
+            self.input_cod_venta.clear()
             self.input_producto.clear()
             self.input_cantidad.clear()
         else:
