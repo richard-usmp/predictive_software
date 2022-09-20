@@ -61,20 +61,20 @@ class Registro_datos():
             id_ = row[0]
         return id_
     
-    def actualizar_stock_material(self, stock, desc):
+    def actualizar_stock_material(self, stock, desc, Mes, Anio):
         cur = self.conexion.cursor()
-        sql ='''UPDATE dbo.Material SET Stock ='{}'
-        WHERE Descripcion = '{}' '''.format(stock, desc)
+        sql ='''UPDATE dbo.Material SET Stock ='{}', Mes = '{}', Anio ='{}'
+        WHERE Descripcion = '{}' '''.format(stock, Mes, Anio, desc)
         cur.execute(sql)
         act = cur.rowcount
         self.conexion.commit()    
         cur.close()
         return act  
 
-    def actualizar_precio_material(self, desc, precio):
+    def actualizar_precio_material(self, desc, precio, Mes, Anio):
         cur = self.conexion.cursor()
-        sql ='''UPDATE dbo.Material SET Precio_compra_unit = '{}'
-        WHERE Descripcion = '{}' '''.format(precio, desc)
+        sql ='''UPDATE dbo.Material SET Precio_compra_unit = '{}', Mes = '{}', Anio ='{}'
+        WHERE Descripcion = '{}' '''.format(precio, Mes, Anio, desc)
         cur.execute(sql)
         act = cur.rowcount
         self.conexion.commit()    

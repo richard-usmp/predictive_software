@@ -224,7 +224,7 @@ class Window_recursos(QMainWindow):
 
             if(descripcion_DB == Descripcion):
                 Precio_compra_unit=0
-                self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion)
+                self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
                 print("Stock actualizado!")
             else:
@@ -238,7 +238,7 @@ class Window_recursos(QMainWindow):
             if(descripcion_DB == Descripcion):
                 Stock=0
                 Estado="Cambio de precio"
-                self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit)
+                self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
                 print("Precio actualizado!")
             else:
