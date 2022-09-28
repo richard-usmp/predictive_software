@@ -203,3 +203,11 @@ class Registro_datos():
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro
+
+    def inserta_usuario(self, user, passw):
+        cur = self.conexion.cursor()
+        sql='''INSERT INTO dbo.login
+        VALUES('{}', '{}')'''.format(user, passw)
+        cur.execute(sql)
+        self.conexion.commit()    
+        cur.close()

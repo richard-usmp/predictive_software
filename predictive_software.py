@@ -1,3 +1,4 @@
+from xml.dom.minidom import Element
 from login import Window_login
 from main import Window_main
 from modulo_consultas_SQ import Window_consultas_SQ
@@ -5,6 +6,8 @@ from modulo_proveedores import Window_proveedores
 from modulo_recursos import Window_recursos
 from modulo_ventas import Window_ventas
 from modulo_log_materiales import Window_material_log
+from main_admin import Window_main_admin
+from crear_usuario import Window_crear_usuario
 import sys
 from PySide6.QtWidgets import QApplication
 from conexionDB import *
@@ -22,6 +25,8 @@ class predictive_software:
         self.modulo_recursos = Window_recursos()
         self.modulo_ventas = Window_ventas()
         self.modulo_material_log = Window_material_log()
+        self.main_admin = Window_main_admin()
+        self.crear_usuario = Window_crear_usuario()
 
         self.login.setupUi()
         self.main.setupUi()
@@ -30,6 +35,8 @@ class predictive_software:
         self.modulo_recursos.setupUi()
         self.modulo_ventas.setupUi()
         self.modulo_material_log.setupUi()
+        self.main_admin.setupUi()
+        self.crear_usuario.setupUi()
 
         #cambiar a ventanas
         self.login.boton_login.clicked.connect(self.logearse)
@@ -39,6 +46,13 @@ class predictive_software:
         self.main.boton3.clicked.connect(self.entrar_Recursos)
         self.main.boton4.clicked.connect(self.entrar_Ventas)
         self.main.boton5.clicked.connect(self.entrar_Consultas)
+
+        self.main_admin.boton1.clicked.connect(self.entrar_dashboard_admin)
+        self.main_admin.boton2.clicked.connect(self.entrar_Proveedores)
+        self.main_admin.boton3.clicked.connect(self.entrar_Recursos)
+        self.main_admin.boton4.clicked.connect(self.entrar_Ventas)
+        self.main_admin.boton5.clicked.connect(self.entrar_Consultas)
+        self.main_admin.boton6.clicked.connect(self.entrar_crear_usuario)
 
         self.modulo_proveedores.boton1.clicked.connect(self.entrar_dashboard)
         self.modulo_proveedores.boton2.clicked.connect(self.entrar_Proveedores)
@@ -68,8 +82,12 @@ class predictive_software:
     def logearse(self):
         if(self.login.signalLogin):
             self.login.hide()
-            self.main.show()
-            self.main.setup_name_user(self.login.usuario.text)
+            if(self.login.usuario.text == "user_prueba"):
+                self.main_admin.show()
+                self.main_admin.setup_name_user(self.login.usuario.text)
+            else:
+                self.main.show()
+                self.main.setup_name_user(self.login.usuario.text)
         else:
             self.login.show()
             
@@ -80,8 +98,31 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
-        self.main.show()
-        self.main.setup_name_user(self.login.usuario.text)
+        if(self.login.usuario.text == "user_prueba"):
+            self.main.hide()
+            self.main_admin.show()
+            self.main_admin.setup_name_user(self.login.usuario.text)
+        else:
+            self.main_admin.hide()
+            self.main.show()
+            self.main.setup_name_user(self.login.usuario.text)
+
+    def entrar_dashboard_admin(self):
+        self.main.hide()
+        self.modulo_proveedores.hide()
+        self.modulo_recursos.hide()
+        self.modulo_ventas.hide()
+        self.modulo_consultas_SQ.hide()
+        self.main_admin.show()
+        self.main_admin.setup_name_user(self.login.usuario.text)
+
+    def entrar_crear_usuario(self):
+        self.main.hide()
+        self.modulo_proveedores.hide()
+        self.modulo_recursos.hide()
+        self.modulo_ventas.hide()
+        self.modulo_consultas_SQ.hide()
+        self.crear_usuario.show()
     
     def entrar_Proveedores(self):
         self.main.hide()
@@ -89,6 +130,7 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
         self.modulo_proveedores.show()
         self.modulo_proveedores.setup_name_user(self.login.usuario.text)
 
@@ -98,6 +140,7 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
         self.modulo_recursos.show()
         self.modulo_recursos.setup_name_user(self.login.usuario.text)
     
@@ -107,6 +150,7 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
         self.modulo_ventas.show()
         self.modulo_ventas.setup_name_user(self.login.usuario.text)
     
@@ -116,6 +160,7 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
         self.modulo_consultas_SQ.show()
         self.modulo_consultas_SQ.setup_name_user(self.login.usuario.text)
 
@@ -124,6 +169,7 @@ class predictive_software:
         self.modulo_proveedores.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
         self.modulo_material_log.show() 
 
 app = QApplication(sys.argv)
