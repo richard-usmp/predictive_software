@@ -87,6 +87,7 @@ class Window_ventas(QMainWindow):
 
         self.boton_ingresar_venta = QPushButton(self.fr_contenedor_arriba)
         self.boton_ingresar_venta.text = "Importar CSV de ventas"
+        self.boton_ingresar_venta.clicked.connect(self.abrir_archivo_csv)
         self.boton_ingresar_venta.geometry = QRect(530, 250, 170, 45)
         self.boton_ingresar_venta.styleSheet = "background: white; font-size: 15px;"
         
@@ -183,4 +184,6 @@ class Window_ventas(QMainWindow):
 
 
     def abrir_archivo_csv(self):
-        archivo = QFileDialog
+        archivo = QFileDialog.getOpenFileName(self, 'Abrir archivo', 'C:\\', 'Archivos de texto (*.prn;*.txt;*.csv)')
+        print('archivo: '+ str(archivo[0]))
+        self.datosTotal.importCSV(archivo[0])

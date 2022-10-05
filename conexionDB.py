@@ -178,24 +178,27 @@ class Registro_datos():
         return contra
     
     def importCSV(self, ruta_de_csv):
-        data = pd.read_csv(f"{ruta_de_csv}")   
+        data = pd.read_csv(f"{ruta_de_csv}", sep=";")   
         df = pd.DataFrame(data)
         
         cursor = self.conexion.cursor()
-
+        print(df.head())
+        print(df.columns)
         for row in df.itertuples():
+            print(row[1])
             cursor.execute('''
-                INSERT INTO dbo.Ventas
+                INSERT INTO dbo.Ventas(DNI_cliente, Cant_Total_Productos_Vendidos, Dia, Mes, Anio, Total_Prod_Vendidos, Fecha)
                 VALUES(?, ?, ?, ?, ?, ?, ?)''',
-                row.DNI_cliente, 
+                row.COD_VENTA, 
                 row.CANT_TOTAL_PRODUCTOS_VENDIDOS, 
-                row.Dia, 
-                row.Mes, 
-                row.Anio, 
-                row.total_prod_vendidos, 
-                row.fecha
+                row.DIA, 
+                row.MES, 
+                row.ANIO, 
+                row.TOTAL_PROD_VENDIDOS, 
+                row.FECHA
             )
-        self.conexion.commit() 
+        print("CVS importado!")
+        self.conexion.commit()
 
     def buscar_dataset(self):
         cursor = self.conexion.cursor()
