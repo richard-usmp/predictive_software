@@ -2,6 +2,7 @@ from unicodedata import decimal
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
+from login import Window_login
 from conexionDB import *
 from datetime import date
 from __feature__ import true_property
@@ -11,6 +12,9 @@ today = date.today()
 class Window_recursos(QMainWindow):
     def setupUi(self):
         self.datosTotal = Registro_datos()
+        self.login = Window_login()
+        self.login.setupUi()
+        self.user_mod = ""
 
         self.setFixedSize(1280, 720)
         self.styleSheet="background: gray;"
@@ -183,13 +187,14 @@ class Window_recursos(QMainWindow):
             Mes = today.strftime("%B")
             Anio = today.strftime("%Y")
             Estado = "Nuevo"
+            user_mod_dentro = self.user_mod
 
             self.datosTotal.inserta_material(Descripcion, Unid_medida, Stock, Precio_compra_unit, Mes, Anio)
 
             descripcion_app = "'"+self.nombre_producto.text+"'"
             ID_material= self.datosTotal.getID_Material(descripcion_app)
 
-            self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
+            self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
             print("Dato insertado!")
             self.nombre_producto.clear()
             self.unid_medida.clear()
@@ -206,6 +211,8 @@ class Window_recursos(QMainWindow):
         Mes = today.strftime("%B")
         Anio = today.strftime("%Y")
         Estado=""
+        user_mod_dentro = self.user_mod
+        print("user_mod_dentro de modificar datos: "+user_mod_dentro)
 
         descripcion_app = "'"+self.cmb_producto_BD.currentText+"'"
         descripcion_DB = self.datosTotal.getMaterial(descripcion_app)
@@ -225,7 +232,7 @@ class Window_recursos(QMainWindow):
             if(descripcion_DB == Descripcion):
                 Precio_compra_unit=0
                 self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion, Mes, Anio)
-                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
+                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Stock actualizado!")
             else:
                 print("Else de modificarDatosBD:actualizar_stock_material")
@@ -239,7 +246,7 @@ class Window_recursos(QMainWindow):
                 Stock=0
                 Estado="Cambio de precio"
                 self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit, Mes, Anio)
-                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
+                self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Precio actualizado!")
             else:
                 print("Else de modificarDatosBD:actualizar_precio_material")
@@ -255,3 +262,5 @@ class Window_recursos(QMainWindow):
         self.titulo_layout.addWidget(self.titulo)
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
+
+        self.user_mod = username

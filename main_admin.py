@@ -90,9 +90,9 @@ class Window_main_admin(QMainWindow):
         self.tabla.wordWrap=False
         self.tabla.isSortingEnabled=False
         self.tabla.alternatingRowColors=True
-        self.tabla.columnCount= 6
+        self.tabla.columnCount= 7
         self.tabla.rowCount = 0
-        nombreColumnas = ("Id","Material", "Cantidad", "Precio por unidad", "Precio", "Fecha entrante")
+        nombreColumnas = ("Id","Nombre", "Unidad de medida", "Stock", "Precio de compra unitario", "Mes", "Año")
         self.tabla.setHorizontalHeaderLabels(nombreColumnas)
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)

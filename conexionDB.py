@@ -33,10 +33,10 @@ class Registro_datos():
         self.conexion.commit()    
         cur.close()
 
-    def insertar_log_material(self, ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado):
+    def insertar_log_material(self, ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod):
         cur = self.conexion.cursor()
         sql='''INSERT INTO dbo.Material_log
-        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado)
+        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod)
         cur.execute(sql)
         self.conexion.commit()    
         cur.close()
