@@ -179,6 +179,7 @@ class Window_proveedores(QMainWindow):
 
             self.datosTotal.inserta_proveedor(empresa, representante, ruc, celular, email, tipo)	
             print("Dato insertado!")
+            QMessageBox.information(self, "Insertar Proveedores", "Dato insertado!")
             self.nombre_empresa.clear()
             self.representante.clear()
             self.ruc.clear()
@@ -187,14 +188,17 @@ class Window_proveedores(QMainWindow):
             self.tipo.clear()
         else:
             print("Escribir datos del proveedor a insertar.")
+            QMessageBox.warning(self, "Insertar Proveedores", "Escribir datos del proveedor a insertar.")
 
     def eliminarProveedor(self):
         if(self.cmb_proveedor_BD.currentIndex!=-1):
             proveedor_app = "'"+self.cmb_proveedor_BD.currentText+"'"
             self.datosTotal.elimina_proveedor(proveedor_app)
             print("¡Proveedor eliminado! Actualice la tabla para visualizar el cambio.")
+            QMessageBox.information(self, "Eliminar proveedor", "¡Proveedor eliminado! Actualice la tabla para visualizar el cambio.")
         else:
             print("No ha seleccionado ningun proveedor a eliminar.")
+            QMessageBox.warning(self, "Eliminar proveedor", "No ha seleccionado ningun proveedor a eliminar.")
 
     def setup_name_user(self, username):
         self.titulo = QLabel(f"Bienvenido {username}", alignment = Qt.AlignCenter)

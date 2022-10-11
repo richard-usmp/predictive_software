@@ -167,11 +167,13 @@ class Window_ventas(QMainWindow):
 
             self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, Año_y_mes)
             print("Venta insertada!")
+            QMessageBox.information(self, "Insertar Ventas", "Venta insertada!")
             self.input_cod_venta.clear()
             self.input_producto.clear()
             self.input_cantidad.clear()
         else:
             print("Escribir item a insertar.")
+            QMessageBox.warning(self, "Insertar Ventas", "Escribir item a insertar.")
 
     def setup_name_user(self, username):
         self.titulo = QLabel(f"Bienvenido {username}", alignment = Qt.AlignCenter)
@@ -187,3 +189,4 @@ class Window_ventas(QMainWindow):
         archivo = QFileDialog.getOpenFileName(self, 'Abrir archivo', 'C:\\', 'Archivos de texto (*.prn;*.txt;*.csv)')
         print('archivo: '+ str(archivo[0]))
         self.datosTotal.importCSV(archivo[0])
+        QMessageBox.information(self, "Diálogo informativo", "Ventas insertadas de archivo CSV!")

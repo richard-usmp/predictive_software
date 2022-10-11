@@ -49,18 +49,16 @@ class Window_login(QMainWindow):
             contra = str("'"+self.contra.text+"'")
             usuario_DB = self.datosTotal.getUser(usuario)
             contra_DB = self.datosTotal.getPass(contra)
-            print("usuario: "+usuario)
-            print("usuario_DB: "+usuario_DB)
-            print("contra: "+contra)
-            print("contra_DB: "+contra_DB)
             if(self.usuario.text!="" or self.contra.text!=""):
                 if(usuario_DB == self.usuario.text and contra_DB == self.contra.text):
                     print("Login passed!")
                     self.signalLogin = True
                 else:
                     print("Login error!")
+                    QMessageBox.warning(self, "Login error!", "Usuario o contraseña incorrectos.")
                     self.signalLogin = False
             else:
                 print("Login error2!")
+                QMessageBox.warning(self, "Login error2!", "Usuario o contraseña incorrectos.")
                 self.signalLogin = False
                 

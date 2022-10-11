@@ -59,3 +59,4 @@ class Window_perfil(QMainWindow):
         self.datosTotal.modificar_pass(new_pass, user_)
         self.input_cantidad.clear()
         print("¡Contraseña modificada!")
+        QMessageBox.information(self, "Cambiar contraseña", "¡Contraseña modificada!")

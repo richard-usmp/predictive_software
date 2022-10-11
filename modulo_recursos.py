@@ -196,12 +196,14 @@ class Window_recursos(QMainWindow):
 
             self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
             print("Dato insertado!")
+            QMessageBox.information(self, "Insertar Recursos", "Dato insertado!")
             self.nombre_producto.clear()
             self.unid_medida.clear()
             self.cantidad_entrante.clear()
             self.costo.clear()
         else:
             print("Escribir item a insertar.")
+            QMessageBox.warning(self, "Insertar Recursos", "Escribir item a insertar.")
 
     def modificarDatosBD(self):
         Stock = self.cantidad_entrante.text
@@ -212,7 +214,6 @@ class Window_recursos(QMainWindow):
         Anio = today.strftime("%Y")
         Estado=""
         user_mod_dentro = self.user_mod
-        print("user_mod_dentro de modificar datos: "+user_mod_dentro)
 
         descripcion_app = "'"+self.cmb_producto_BD.currentText+"'"
         descripcion_DB = self.datosTotal.getMaterial(descripcion_app)
@@ -220,6 +221,7 @@ class Window_recursos(QMainWindow):
 
         if(self.cmb_producto_BD.currentIndex==-1):
             print("Seleccionar item a modificar.")
+            QMessageBox.warning(self, "Modificar datos", "Seleccionar item a modificar.")
         elif(self.cantidad_entrante.text!=""):
             get_stock = self.datosTotal.getStock(descripcion_app)
             if(self.cmb_sumar_restar.currentIndex==-1 or self.cmb_sumar_restar.currentIndex==0):
@@ -234,6 +236,7 @@ class Window_recursos(QMainWindow):
                 self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Stock actualizado!")
+                QMessageBox.information(self, "Modificar datos", "Stock actualizado!")
                 self.nombre_producto.clear()
                 self.unid_medida.clear()
                 self.cantidad_entrante.clear()
@@ -245,6 +248,7 @@ class Window_recursos(QMainWindow):
         
         if(self.cmb_producto_BD.currentIndex==-1):
             print("Seleccionar item a modificar.")
+            QMessageBox.warning(self, "Modificar datos", "Seleccionar item a modificar.")
         elif(self.costo.text!=""):
             if(descripcion_DB == Descripcion):
                 Stock=0
@@ -252,6 +256,7 @@ class Window_recursos(QMainWindow):
                 self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Precio actualizado!")
+                QMessageBox.information(self, "Modificar datos", "Precio actualizado!")
                 self.nombre_producto.clear()
                 self.unid_medida.clear()
                 self.cantidad_entrante.clear()
