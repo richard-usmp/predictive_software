@@ -214,3 +214,13 @@ class Registro_datos():
         cur.execute(sql)
         self.conexion.commit()    
         cur.close()
+
+    def modificar_pass(self, new_pass, user):
+        cur = self.conexion.cursor()
+        sql ='''UPDATE dbo.login SET Password = '{}'
+        WHERE usuario = '{}' '''.format(new_pass, user)
+        cur.execute(sql)
+        act = cur.rowcount
+        self.conexion.commit()    
+        cur.close()
+        return act 

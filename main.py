@@ -47,6 +47,11 @@ class Window_main(QMainWindow):
         self.boton5.geometry = QRect(80, 350, 200,45)
         self.boton5.styleSheet = "background: white; font-size: 25px;"
 
+        self.boton6 = QPushButton(self.fr_titulo)
+        self.boton6.text = "Perfil"
+        self.boton6.geometry = QRect(80, 420, 200,45)
+        self.boton6.styleSheet = "background: white; font-size: 25px;"
+
         #cuadro de dialogo
         self.dialogo = QDialog(self)
         self.dialogo.setFixedSize(300, 300)

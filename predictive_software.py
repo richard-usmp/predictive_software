@@ -8,6 +8,7 @@ from modulo_ventas import Window_ventas
 from modulo_log_materiales import Window_material_log
 from main_admin import Window_main_admin
 from crear_usuario import Window_crear_usuario
+from perfil_user import Window_perfil
 import sys
 from PySide6.QtWidgets import QApplication
 from conexionDB import *
@@ -27,6 +28,7 @@ class predictive_software:
         self.modulo_material_log = Window_material_log()
         self.main_admin = Window_main_admin()
         self.crear_usuario = Window_crear_usuario()
+        self.perfil = Window_perfil()
 
         self.login.setupUi()
         self.main.setupUi()
@@ -37,6 +39,7 @@ class predictive_software:
         self.modulo_material_log.setupUi()
         self.main_admin.setupUi()
         self.crear_usuario.setupUi()
+        self.perfil.setupUi()
 
         #cambiar a ventanas
         self.login.boton_login.clicked.connect(self.logearse)
@@ -46,6 +49,7 @@ class predictive_software:
         self.main.boton3.clicked.connect(self.entrar_Recursos)
         self.main.boton4.clicked.connect(self.entrar_Ventas)
         self.main.boton5.clicked.connect(self.entrar_Consultas)
+        self.main.boton6.clicked.connect(self.entrar_perfil)
 
         self.main_admin.boton1.clicked.connect(self.entrar_dashboard_admin)
         self.main_admin.boton2.clicked.connect(self.entrar_Proveedores)
@@ -53,6 +57,7 @@ class predictive_software:
         self.main_admin.boton4.clicked.connect(self.entrar_Ventas)
         self.main_admin.boton5.clicked.connect(self.entrar_Consultas)
         self.main_admin.boton6.clicked.connect(self.entrar_crear_usuario)
+        self.main_admin.boton7.clicked.connect(self.entrar_perfil)
 
         self.modulo_proveedores.boton1.clicked.connect(self.entrar_dashboard)
         self.modulo_proveedores.boton2.clicked.connect(self.entrar_Proveedores)
@@ -171,6 +176,14 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
         self.modulo_material_log.show() 
+
+    def entrar_perfil(self):
+        self.modulo_proveedores.hide()
+        self.modulo_ventas.hide()
+        self.modulo_consultas_SQ.hide()
+        self.modulo_material_log.hide()
+        self.perfil.show()
+        self.perfil.setup_name_user(self.login.usuario.text)
 
 app = QApplication(sys.argv)
 

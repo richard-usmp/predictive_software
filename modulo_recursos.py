@@ -234,6 +234,10 @@ class Window_recursos(QMainWindow):
                 self.datosTotal.actualizar_stock_material(Stock_sumado, Descripcion, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Stock actualizado!")
+                self.nombre_producto.clear()
+                self.unid_medida.clear()
+                self.cantidad_entrante.clear()
+                self.costo.clear()
             else:
                 print("Else de modificarDatosBD:actualizar_stock_material")
         else:
@@ -248,6 +252,10 @@ class Window_recursos(QMainWindow):
                 self.datosTotal.actualizar_precio_material(Descripcion, Precio_compra_unit, Mes, Anio)
                 self.datosTotal.insertar_log_material(ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, user_mod_dentro)
                 print("Precio actualizado!")
+                self.nombre_producto.clear()
+                self.unid_medida.clear()
+                self.cantidad_entrante.clear()
+                self.costo.clear()
             else:
                 print("Else de modificarDatosBD:actualizar_precio_material")
         else:
