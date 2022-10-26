@@ -5,11 +5,6 @@ from PySide6.QtCharts import *
 from conexionDB import *
 import sys
 from __feature__ import true_property
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
-import pyqtgraph as pg
-
 
 class Window_main_admin(QMainWindow):
     def setupUi(self):
@@ -146,27 +141,64 @@ class Window_main_admin(QMainWindow):
         self.fr_bienvenida.setLayout(self.titulo_layout)
 
     def create_line_chart(self):
-        self.series = QLineSeries()
-        self.series.append(0, 6)
-        self.series.append(2, 4)
-        self.series.append(3, 8)
-        self.series.append(7, 4)
-        self.series.append(10, 5)
-        self.series.append(QPointF(11, 1))
-        self.series.append(QPointF(13, 3))
-        self.series.append(QPointF(17, 6))
-        self.series.append(QPointF(18, 3))
-        self.series.append(QPointF(20, 2))
+        self.lineSeries = QLineSeries()
+        #Q_ventas
+        a=1
+        for x in self.datosTotal.grafico_ventas_cantidad():
+            self.lineSeries.append(a,x)
+            a = a + 1
+
+        #grafico de barras = 0; sirve para colocar categoria al eje X
+        for x in range(len(self.datosTotal.grafico_ventas())): 
+            self.set0 = QBarSet(f"{x}")
+        i = 0
+        while i <=len(self.datosTotal.grafico_ventas()):
+            j=0
+            self.set0.append([j])
+            i = i + 1
+
+        self.barSeries = QBarSeries()
+        self.barSeries.append(self.set0)
 
         self.chart = QChart()
         self.chart.legend().hide()
-        self.chart.addSeries(self.series)
+        self.chart.addSeries(self.barSeries)
+        self.chart.addSeries(self.lineSeries)
         self.chart.createDefaultAxes()
-        self.chart.title="Simple line chart example"
+        self.chart.zoom
+        self.chart.title="Cantidad de ventas mensuales"
+
+        self.categories = self.datosTotal.grafico_ventas()
+        self.axisX = QBarCategoryAxis()
+        self.axisX.append(self.categories)
+        self.chart.setAxisX(self.axisX, self.lineSeries)
+        self.chart.setAxisX(self.axisX, self.barSeries)
+        self.chart.style = "font-size: 5px;"
+
+        self.axisY = QValueAxis()
+        self.chart.setAxisY(self.axisY, self.lineSeries)
+        self.chart.setAxisY(self.axisY, self.barSeries)
+        self.axisY.setRange(0, 50)
 
         self.chartView = QChartView(self.chart)
 
-        self.chart.animationOptions=QChart.AllAnimations
+        #self.chart.animationOptions=QChart.AllAnimations
 
         self.chartView.chart().theme=QChart.ChartThemeDark
         self.line_charts_cont.addWidget(self.chartView)
+
+    def keyPressEvent(self,event):
+        if(event.key() == Qt.Key_Plus):
+            self.chart.zoomIn()
+        elif(event.key() == Qt.Key_Minus):
+            self.chart.zoomOut()
+        elif(event.key() == Qt.Key_D):
+            self.chart.scroll(15,0)
+        elif(event.key() == Qt.Key_A):
+            self.chart.scroll(-15,0)
+        elif(event.key() == Qt.Key_W):
+            self.chart.scroll(0,10)
+        elif(event.key() == Qt.Key_S):
+            self.chart.scroll(0,-10)
+        elif(event.key() == Qt.Key_R):
+            self.chart.zoomReset()

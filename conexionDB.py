@@ -202,7 +202,7 @@ class Registro_datos():
 
     def buscar_dataset(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT ID_Venta, Fecha, Total_Prod_Vendidos FROM dbo.Ventas" 
+        sql = "SELECT ID_Venta, Fecha, MAX(Total_Prod_Vendidos) FROM dbo.Ventas GROUP BY Fecha" 
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro
@@ -224,3 +224,18 @@ class Registro_datos():
         self.conexion.commit()    
         cur.close()
         return act 
+
+    #graficos
+    def grafico_ventas(self):
+        cursor = self.conexion.cursor()
+        sql = "SELECT DISTINCT Fecha FROM dbo.Ventas" 
+        cursor.execute(sql)
+        row = [item[0] for item in cursor.fetchall()]
+        return row
+
+    def grafico_ventas_cantidad(self):
+        cursor = self.conexion.cursor()
+        sql = "SELECT max(Total_Prod_Vendidos) FROM dbo.Ventas GROUP BY Fecha" 
+        cursor.execute(sql)
+        row = [item[0] for item in cursor.fetchall()]
+        return row
