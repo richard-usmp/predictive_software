@@ -3,6 +3,7 @@ from PySide6.QtCore import *
 import sys
 from conexionDB import *
 from __feature__ import true_property
+import requests
 
 class Window_consultas_SQ(QMainWindow):
     def setupUi(self):
@@ -57,7 +58,7 @@ class Window_consultas_SQ(QMainWindow):
         self.texto_cont_arriba.alignment = Qt.AlignJustify
         self.texto_cont_arriba.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
 
-        #texto del contenedor abajo
+        #texto del contenedor arriba
         self.texto_cont_abajo = QLabel(self.fr_contenedor_arriba)
         self.texto_cont_abajo.text = "DataSet"  
         self.texto_cont_abajo.geometry = QRect(10,0, 850,30)
@@ -87,6 +88,31 @@ class Window_consultas_SQ(QMainWindow):
         self.boton_mostrar_datos.geometry = QRect(350, 0, 200,45)
         self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
 
+        #Texto Analisis predictivo
+        self.texto_titulo = QLabel(self.fr_contenedor_arriba)
+        self.texto_titulo.text = "Análisis Predictivo"  
+        self.texto_titulo.geometry = QRect(10,350, 850,30)
+        self.texto_titulo.alignment = Qt.AlignJustify
+        self.texto_titulo.styleSheet = "color: blue; font-size: 25px;"
+        #Formulario ana_predi
+        self.fecha = QLineEdit(self.fr_contenedor_arriba)
+        self.fecha.placeholderText= "Fecha"
+        self.fecha.geometry = QRect(10,410, 395,20)
+        self.fecha.alignment = Qt.AlignCenter
+        self.fecha.styleSheet = "color: gray; font-size: 15px;"
+
+        self.cant_venta_mes_pasado = QLineEdit(self.fr_contenedor_arriba)
+        self.cant_venta_mes_pasado.placeholderText= "Ingrese cantidad de venta del mes seleccionado..."
+        self.cant_venta_mes_pasado.geometry = QRect(10,450, 395,20)
+        self.cant_venta_mes_pasado.alignment = Qt.AlignCenter
+        self.cant_venta_mes_pasado.styleSheet = "color: gray; font-size: 15px;"
+
+        self.boton_analisis_predictivos = QPushButton(self.fr_contenedor_arriba)
+        self.boton_analisis_predictivos.text = "Análisis predictivo"
+        self.boton_analisis_predictivos.clicked.connect(self.rest_api)
+        self.boton_analisis_predictivos.geometry = QRect(10, 490, 200,45)
+        self.boton_analisis_predictivos.styleSheet = "background: white; font-size: 15px;"
+
     def datosTabla(self):
         datos = self.datosTotal.buscar_dataset()
 
@@ -113,3 +139,11 @@ class Window_consultas_SQ(QMainWindow):
         self.titulo_layout.addWidget(self.titulo)
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
+
+    def rest_api(self):
+        mes = self.fecha.text
+        cantidad_ventas_mes = self.cant_venta_mes_pasado.text
+        payload = dict(key1=f'{mes}', key2=f'{cantidad_ventas_mes}')
+        r = requests.post('https://api-brandon-tesis.herokuapp.com/prophetv3', json=payload)
+        print(r.text)
+        #return r.text

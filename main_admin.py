@@ -1,9 +1,15 @@
 from ctypes import alignment
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
+from PySide6.QtCharts import *
 from conexionDB import *
 import sys
 from __feature__ import true_property
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+import pyqtgraph as pg
+
 
 class Window_main_admin(QMainWindow):
     def setupUi(self):
@@ -70,12 +76,9 @@ class Window_main_admin(QMainWindow):
         self.fr_contenedor_arriba = QFrame(self)
         self.fr_contenedor_arriba.geometry=QRect(320, 10, 950, 340)
         self.fr_contenedor_arriba.styleSheet="background: white;"
-        #texto del contenedor arriba
-        self.texto_cont_arriba = QLabel(self.fr_contenedor_arriba)
-        self.texto_cont_arriba.text = "Bienvenido"  
-        self.texto_cont_arriba.geometry = QRect(10,0, 850,30)
-        self.texto_cont_arriba.alignment = Qt.AlignJustify
-        self.texto_cont_arriba.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
+        #grafico
+        self.line_charts_cont = QGridLayout(self.fr_contenedor_arriba)
+        self.create_line_chart()
         
         #contenedor abajo
         self.fr_contenedor_abajo = QFrame(self)
@@ -141,3 +144,29 @@ class Window_main_admin(QMainWindow):
         self.titulo_layout.addWidget(self.titulo)
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
+
+    def create_line_chart(self):
+        self.series = QLineSeries()
+        self.series.append(0, 6)
+        self.series.append(2, 4)
+        self.series.append(3, 8)
+        self.series.append(7, 4)
+        self.series.append(10, 5)
+        self.series.append(QPointF(11, 1))
+        self.series.append(QPointF(13, 3))
+        self.series.append(QPointF(17, 6))
+        self.series.append(QPointF(18, 3))
+        self.series.append(QPointF(20, 2))
+
+        self.chart = QChart()
+        self.chart.legend().hide()
+        self.chart.addSeries(self.series)
+        self.chart.createDefaultAxes()
+        self.chart.title="Simple line chart example"
+
+        self.chartView = QChartView(self.chart)
+
+        self.chart.animationOptions=QChart.AllAnimations
+
+        self.chartView.chart().theme=QChart.ChartThemeDark
+        self.line_charts_cont.addWidget(self.chartView)
