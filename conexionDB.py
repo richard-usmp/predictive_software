@@ -202,7 +202,7 @@ class Registro_datos():
 
     def buscar_dataset(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT ID_Venta, Fecha, MAX(Total_Prod_Vendidos) FROM dbo.Ventas GROUP BY Fecha" 
+        sql = "SELECT ID_Venta, Fecha, Total_Prod_Vendidos FROM dbo.Ventas" 
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro

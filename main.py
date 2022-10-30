@@ -160,8 +160,7 @@ class Window_main(QMainWindow):
         self.chart.addSeries(self.barSeries)
         self.chart.addSeries(self.lineSeries)
         self.chart.createDefaultAxes()
-        self.chart.zoom
-        self.chart.title="Cantidad de ventas mensuales"
+        self.chart.title="Cantidad de ventas por mes"
 
         self.categories = self.datosTotal.grafico_ventas()
         self.axisX = QBarCategoryAxis()

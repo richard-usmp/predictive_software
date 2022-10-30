@@ -1,9 +1,17 @@
+from re import template
+from tkinter.ttk import Separator
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
 from conexionDB import *
 from __feature__ import true_property
 import requests
+import json
+import jinja2
+import pdfkit
+from datetime import date
+
+today = date.today()
 
 class Window_consultas_SQ(QMainWindow):
     def setupUi(self):
@@ -95,11 +103,11 @@ class Window_consultas_SQ(QMainWindow):
         self.texto_titulo.alignment = Qt.AlignJustify
         self.texto_titulo.styleSheet = "color: blue; font-size: 25px;"
         #Formulario ana_predi
-        self.fecha = QLineEdit(self.fr_contenedor_arriba)
+        self.fecha = QComboBox(self.fr_contenedor_arriba)
         self.fecha.placeholderText= "Fecha"
-        self.fecha.geometry = QRect(10,410, 395,20)
-        self.fecha.alignment = Qt.AlignCenter
+        self.fecha.geometry = QRect(10,400, 395,20)
         self.fecha.styleSheet = "color: gray; font-size: 15px;"
+        self.fecha.addItems(["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"])
 
         self.cant_venta_mes_pasado = QLineEdit(self.fr_contenedor_arriba)
         self.cant_venta_mes_pasado.placeholderText= "Ingrese cantidad de venta del mes seleccionado..."
@@ -141,9 +149,55 @@ class Window_consultas_SQ(QMainWindow):
         self.fr_bienvenida.setLayout(self.titulo_layout)
 
     def rest_api(self):
-        mes = self.fecha.text
+        anio = today.strftime("%Y")
+        mes_ = self.fecha.currentIndex + 1
         cantidad_ventas_mes = self.cant_venta_mes_pasado.text
-        payload = dict(key1=f'{mes}', key2=f'{cantidad_ventas_mes}')
-        r = requests.post('https://api-brandon-tesis.herokuapp.com/prophetv3', json=payload)
-        print(r.text)
-        #return r.text
+        QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
+        r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
+        json_texto = r.text
+        jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
+        prediccion_ventas = jsondecoded["yhat_upper"]
+        print(prediccion_ventas)
+        q_aluminio = 5 * prediccion_ventas
+        q_pernos_aluminio = 2.71 * prediccion_ventas
+        q_combustible = 1.91 * prediccion_ventas
+        q_pasta_para_metales_dura = 2.31 * prediccion_ventas
+        q_pasta_para_metales_suave = 2.46 * prediccion_ventas
+        q_pintura_metalica = 2.11 * prediccion_ventas
+        q_lija_para_metales_n80 = 2.46 * prediccion_ventas
+        q_lija_para_metales_n180 = 2.76 * prediccion_ventas
+        q_disco_corte_abl = 2.16 * prediccion_ventas
+        q_trapo_metales_para_pulir = 0.71 * prediccion_ventas
+        q_petroleo = 2.11 * prediccion_ventas
+        q_tiner = 2.56 * prediccion_ventas
+        q_sacos_para_productos_finales = 2.71 * prediccion_ventas
+        q_madera = 5.66 * prediccion_ventas
+        q_pernos_cobre = 2.61 * prediccion_ventas
+        q_rafia = 2.71 * prediccion_ventas
+        q_disco_corte_acl = 1.91 * prediccion_ventas
+        q_jebes_abl = 2.06 * prediccion_ventas
+        q_jebes_acl = 2.36 * prediccion_ventas
+        q_tornillos_aluminio = 2.21 * prediccion_ventas
+        q_remaches_aluminio = 2.46 * prediccion_ventas
+        q_brocas_para_aluminio = 1.41 * prediccion_ventas
+        q_lija_para_metales_n120 = 2.41 * prediccion_ventas
+        q_fajas_metalicas = 2.06 * prediccion_ventas
+        q_pasta_para_metales_roja = 2.11 * prediccion_ventas
+        q_lija_para_metales_60 = 1.96 * prediccion_ventas
+
+        #PDF
+        ruta_template = 'D:/QtDesigner/predictive_software/template.html'
+        info = {"mes":self.fecha.currentText, "prediccion_ventas": prediccion_ventas , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_aluminio, "q_combustible": q_combustible, "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_corte_abl, "q_trapo_metales_para_pulir": q_trapo_metales_para_pulir, "q_petroleo": q_petroleo, "q_tiner": q_tiner, "q_sacos_para_productos_finales": q_sacos_para_productos_finales, "q_madera": q_madera, "q_pernos_cobre": q_pernos_cobre, "q_rafia": q_rafia, "q_disco_corte_acl": q_disco_corte_acl, "q_jebes_abl": q_jebes_abl, "q_jebes_acl": q_jebes_acl, "q_tornillos_aluminio": q_tornillos_aluminio, "q_remaches_aluminio": q_remaches_aluminio, "q_brocas_para_aluminio": q_brocas_para_aluminio, "q_lija_para_metales_n120": q_lija_para_metales_n120, "q_fajas_metalicas": q_fajas_metalicas, "q_pasta_para_metales_roja": q_pasta_para_metales_roja, "q_lija_para_metales_60": q_lija_para_metales_60}
+        nombre_template = ruta_template.split('/')[-1]
+        ruta_template = ruta_template.replace(nombre_template,'')
+        
+        env = jinja2.Environment(loader=jinja2.FileSystemLoader(ruta_template))
+        template=env.get_template(nombre_template)
+        html = template.render(info)
+        
+        options = { 'page-size': 'Letter', 'margin-top': '0.05in', 'margin-right': '0.05in', 'margin-bottom': '0.05in', 'margin-left': '0.05in', 'encoding':'UTF-8'}
+        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+        ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
+        pdfkit.from_string(html, ruta_salida, options=options, configuration=config)
+
+        QMessageBox.information(self, "Predicción...", f"La predición de ventas para el mes {self.fecha.currentText} es {prediccion_ventas}. Se exportó un pdf a {ruta_salida}.")
