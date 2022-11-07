@@ -10,6 +10,7 @@ import json
 import jinja2
 import pdfkit
 from datetime import date
+import math
 
 today = date.today()
 
@@ -158,36 +159,37 @@ class Window_consultas_SQ(QMainWindow):
         jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
         prediccion_ventas = jsondecoded["yhat_upper"]
         print(prediccion_ventas)
-        q_aluminio = 5 * prediccion_ventas
-        q_pernos_aluminio = 2.71 * prediccion_ventas
-        q_combustible = 1.91 * prediccion_ventas
-        q_pasta_para_metales_dura = 2.31 * prediccion_ventas
-        q_pasta_para_metales_suave = 2.46 * prediccion_ventas
-        q_pintura_metalica = 2.11 * prediccion_ventas
-        q_lija_para_metales_n80 = 2.46 * prediccion_ventas
-        q_lija_para_metales_n180 = 2.76 * prediccion_ventas
-        q_disco_corte_abl = 2.16 * prediccion_ventas
-        q_trapo_metales_para_pulir = 0.71 * prediccion_ventas
-        q_petroleo = 2.11 * prediccion_ventas
-        q_tiner = 2.56 * prediccion_ventas
-        q_sacos_para_productos_finales = 2.71 * prediccion_ventas
-        q_madera = 5.66 * prediccion_ventas
-        q_pernos_cobre = 2.61 * prediccion_ventas
-        q_rafia = 2.71 * prediccion_ventas
-        q_disco_corte_acl = 1.91 * prediccion_ventas
-        q_jebes_abl = 2.06 * prediccion_ventas
-        q_jebes_acl = 2.36 * prediccion_ventas
-        q_tornillos_aluminio = 2.21 * prediccion_ventas
-        q_remaches_aluminio = 2.46 * prediccion_ventas
-        q_brocas_para_aluminio = 1.41 * prediccion_ventas
-        q_lija_para_metales_n120 = 2.41 * prediccion_ventas
-        q_fajas_metalicas = 2.06 * prediccion_ventas
-        q_pasta_para_metales_roja = 2.11 * prediccion_ventas
-        q_lija_para_metales_60 = 1.96 * prediccion_ventas
+        q_aluminio = round(5 * prediccion_ventas)
+        q_pernos_aluminio = round(2.71 * prediccion_ventas)
+        q_combustible = round(1.91 * prediccion_ventas)
+        q_pasta_para_metales_dura = round(2.31 * prediccion_ventas)
+        q_pasta_para_metales_suave = round(2.46 * prediccion_ventas)
+        q_pintura_metalica = round(2.11 * prediccion_ventas)
+        q_lija_para_metales_n80 = round(2.46 * prediccion_ventas)
+        q_lija_para_metales_n180 = round(2.76 * prediccion_ventas)
+        q_disco_corte_abl = round(2.16 * prediccion_ventas)
+        q_trapo_metales_para_pulir = round(0.71 * prediccion_ventas)
+        q_petroleo = round(2.11 * prediccion_ventas)
+        q_tiner = round(2.56 * prediccion_ventas)
+        q_sacos_para_productos_finales = round(2.71 * prediccion_ventas)
+        q_madera = round(5.66 * prediccion_ventas)
+        q_pernos_cobre = round(2.61 * prediccion_ventas)
+        q_rafia = round(2.71 * prediccion_ventas)
+        q_disco_corte_acl = round(1.91 * prediccion_ventas)
+        q_jebes_abl = round(2.06 * prediccion_ventas)
+        q_jebes_acl = round(2.36 * prediccion_ventas)
+        q_tornillos_aluminio = round(2.21 * prediccion_ventas)
+        q_remaches_aluminio = round(2.46 * prediccion_ventas)
+        q_brocas_para_aluminio = round(1.41 * prediccion_ventas)
+        q_lija_para_metales_n120 = round(2.41 * prediccion_ventas)
+        q_fajas_metalicas = round(2.06 * prediccion_ventas)
+        q_pasta_para_metales_roja = round(2.11 * prediccion_ventas)
+        q_lija_para_metales_60 = round(1.96 * prediccion_ventas)
 
         #PDF
+        
         ruta_template = 'D:/QtDesigner/predictive_software/template.html'
-        info = {"mes":self.fecha.currentText, "prediccion_ventas": prediccion_ventas , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_aluminio, "q_combustible": q_combustible, "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_corte_abl, "q_trapo_metales_para_pulir": q_trapo_metales_para_pulir, "q_petroleo": q_petroleo, "q_tiner": q_tiner, "q_sacos_para_productos_finales": q_sacos_para_productos_finales, "q_madera": q_madera, "q_pernos_cobre": q_pernos_cobre, "q_rafia": q_rafia, "q_disco_corte_acl": q_disco_corte_acl, "q_jebes_abl": q_jebes_abl, "q_jebes_acl": q_jebes_acl, "q_tornillos_aluminio": q_tornillos_aluminio, "q_remaches_aluminio": q_remaches_aluminio, "q_brocas_para_aluminio": q_brocas_para_aluminio, "q_lija_para_metales_n120": q_lija_para_metales_n120, "q_fajas_metalicas": q_fajas_metalicas, "q_pasta_para_metales_roja": q_pasta_para_metales_roja, "q_lija_para_metales_60": q_lija_para_metales_60}
+        info = {"mes":self.fecha.currentText, "prediccion_ventas": math.floor(prediccion_ventas) , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_aluminio, "q_combustible": q_combustible, "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_corte_abl, "q_trapo_metales_para_pulir": q_trapo_metales_para_pulir, "q_petroleo": q_petroleo, "q_tiner": q_tiner, "q_sacos_para_productos_finales": q_sacos_para_productos_finales, "q_madera": q_madera, "q_pernos_cobre": q_pernos_cobre, "q_rafia": q_rafia, "q_disco_corte_acl": q_disco_corte_acl, "q_jebes_abl": q_jebes_abl, "q_jebes_acl": q_jebes_acl, "q_tornillos_aluminio": q_tornillos_aluminio, "q_remaches_aluminio": q_remaches_aluminio, "q_brocas_para_aluminio": q_brocas_para_aluminio, "q_lija_para_metales_n120": q_lija_para_metales_n120, "q_fajas_metalicas": q_fajas_metalicas, "q_pasta_para_metales_roja": q_pasta_para_metales_roja, "q_lija_para_metales_60": q_lija_para_metales_60}
         nombre_template = ruta_template.split('/')[-1]
         ruta_template = ruta_template.replace(nombre_template,'')
         
