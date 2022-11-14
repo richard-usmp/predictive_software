@@ -66,7 +66,7 @@ class Window_recursos(QMainWindow):
         self.texto_cont_arriba.styleSheet = "color: gray; font-size: 25px; font-weight: bold;"
         #inputs
         self.nombre_producto = QLineEdit(self.fr_contenedor_arriba)
-        self.nombre_producto.placeholderText= "Nombre producto"
+        self.nombre_producto.placeholderText= "Nombre materia prima"
         self.nombre_producto.geometry = QRect(10,50, 395,20)
         self.nombre_producto.alignment = Qt.AlignCenter
         self.nombre_producto.styleSheet = "color: gray; font-size: 15px;"
@@ -104,7 +104,7 @@ class Window_recursos(QMainWindow):
 
         #seccion de modificar
         self.cmb_producto_BD = QComboBox(self.fr_contenedor_arriba)
-        self.cmb_producto_BD.placeholderText= "Producto para modificar..."
+        self.cmb_producto_BD.placeholderText= "Materia prima para modificar..."
         self.cmb_producto_BD.geometry = QRect(500,50, 395,20)
         self.cmb_producto_BD.styleSheet = "color: gray; font-size: 15px;"
         self.cmb_producto_BD.addItems(self.datosTotal.buscar_material_cmb())
