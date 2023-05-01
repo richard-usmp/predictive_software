@@ -87,12 +87,12 @@ class predictive_software:
     def logearse(self):
         if(self.login.signalLogin):
             self.login.hide()
-            if(self.login.usuario.text == "user_prueba"):
+            if(self.login.getUsuario() == "user_prueba"):
                 self.main_admin.show()
-                self.main_admin.setup_name_user(self.login.usuario.text)
+                self.main_admin.setup_name_user(self.login.getUsuario())
             else:
                 self.main.show()
-                self.main.setup_name_user(self.login.usuario.text)
+                self.main.setup_name_user(self.login.getUsuario())
         else:
             self.login.show()
             
@@ -103,14 +103,14 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
-        if(self.login.usuario.text == "user_prueba"):
+        if(self.login.getUsuario() == "user_prueba"):
             self.main.hide()
             self.main_admin.show()
-            self.main_admin.setup_name_user(self.login.usuario.text)
+            self.main_admin.setup_name_user(self.login.getUsuario())
         else:
             self.main_admin.hide()
             self.main.show()
-            self.main.setup_name_user(self.login.usuario.text)
+            self.main.setup_name_user(self.login.getUsuario())
 
     def entrar_dashboard_admin(self):
         self.main.hide()
@@ -119,7 +119,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.main_admin.show()
-        self.main_admin.setup_name_user(self.login.usuario.text)
+        self.main_admin.setup_name_user(self.login.getUsuario())
 
     def entrar_crear_usuario(self):
         self.main.hide()
@@ -137,7 +137,7 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
         self.modulo_proveedores.show()
-        self.modulo_proveedores.setup_name_user(self.login.usuario.text)
+        self.modulo_proveedores.setup_name_user(self.login.getUsuario())
 
     def entrar_Recursos(self):
         self.main.hide()
@@ -147,7 +147,7 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
         self.modulo_recursos.show()
-        self.modulo_recursos.setup_name_user(self.login.usuario.text)
+        self.modulo_recursos.setup_name_user(self.login.getUsuario())
     
     def entrar_Ventas(self):
         self.main.hide()
@@ -157,7 +157,7 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
         self.modulo_ventas.show()
-        self.modulo_ventas.setup_name_user(self.login.usuario.text)
+        self.modulo_ventas.setup_name_user(self.login.getUsuario())
     
     def entrar_Consultas(self):
         self.main.hide()
@@ -167,7 +167,7 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
         self.modulo_consultas_SQ.show()
-        self.modulo_consultas_SQ.setup_name_user(self.login.usuario.text)
+        self.modulo_consultas_SQ.setup_name_user(self.login.getUsuario())
 
     def entrar_Recursos_log(self):
         self.main.hide()
@@ -183,7 +183,7 @@ class predictive_software:
         self.modulo_consultas_SQ.hide()
         self.modulo_material_log.hide()
         self.perfil.show()
-        self.perfil.setup_name_user(self.login.usuario.text)
+        self.perfil.setup_name_user(self.login.getUsuario())
 
 app = QApplication(sys.argv)
 

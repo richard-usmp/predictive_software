@@ -1,10 +1,14 @@
 from ctypes import alignment
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
-from PySide6.QtCharts import *
+# from PySide6.QtCharts import *
 from conexionDB import *
 import sys
 from __feature__ import true_property
+from matplotlib.figure import Figure
+import numpy as np
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 
 class Window_main_admin(QMainWindow):
     def setupUi(self):
@@ -72,8 +76,33 @@ class Window_main_admin(QMainWindow):
         self.fr_contenedor_arriba.geometry=QRect(320, 10, 950, 340)
         self.fr_contenedor_arriba.styleSheet="background: white;"
         #grafico
-        self.line_charts_cont = QGridLayout(self.fr_contenedor_arriba)
-        self.create_line_chart()
+        self.fig = Figure()
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_title('Cantidad de ventas por mes')
+        self.ax.set_xlabel('Mes')
+        self.ax.set_ylabel('Cantidad')
+        self.canvas = FigureCanvas(self.fig)
+        self.toolbar = NavigationToolbar(self.canvas, self)#
+        layout = QVBoxLayout(self.fr_contenedor_arriba)
+        layout.addWidget(self.canvas)
+        layout.addWidget(self.toolbar)#
+
+        #x = np.arange(1, 73)
+        y = self.datosTotal.grafico_ventas_cantidad()
+        #self.ax.plot(x, y)
+
+        categories = self.datosTotal.grafico_ventas()
+        x_bars = np.arange(len(categories))
+        width = 0.35
+        self.ax.bar(x_bars, y, width, label='Cantidad de ventas')
+
+        self.ax.set_xticks(x_bars)
+        self.ax.set_xticklabels(categories)
+        self.ax.legend()
+        self.fig.tight_layout()
+
+        self.toolbar.update()#
+        self.canvas.draw()
         
         #contenedor abajo
         self.fr_contenedor_abajo = QFrame(self)
@@ -140,65 +169,65 @@ class Window_main_admin(QMainWindow):
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
 
-    def create_line_chart(self):
-        self.lineSeries = QLineSeries()
-        #Q_ventas
-        a=1
-        for x in self.datosTotal.grafico_ventas_cantidad():
-            self.lineSeries.append(a,x)
-            a = a + 1
+    # def create_line_chart(self):
+    #     self.lineSeries = QLineSeries()
+    #     #Q_ventas
+    #     a=1
+    #     for x in self.datosTotal.grafico_ventas_cantidad():
+    #         self.lineSeries.append(a,x)
+    #         a = a + 1
 
-        #grafico de barras = 0; sirve para colocar categoria al eje X
-        for x in range(len(self.datosTotal.grafico_ventas())): 
-            self.set0 = QBarSet(f"{x}")
-        i = 0
-        while i <=len(self.datosTotal.grafico_ventas()):
-            j=0
-            self.set0.append([j])
-            i = i + 1
+    #     #grafico de barras = 0; sirve para colocar categoria al eje X
+    #     for x in range(len(self.datosTotal.grafico_ventas())): 
+    #         self.set0 = QBarSet(f"{x}")
+    #     i = 0
+    #     while i <=len(self.datosTotal.grafico_ventas()):
+    #         j=0
+    #         self.set0.append([j])
+    #         i = i + 1
 
-        self.barSeries = QBarSeries()
-        self.barSeries.append(self.set0)
+    #     self.barSeries = QBarSeries()
+    #     self.barSeries.append(self.set0)
 
-        self.chart = QChart()
-        self.chart.legend().hide()
-        self.chart.addSeries(self.barSeries)
-        self.chart.addSeries(self.lineSeries)
-        self.chart.createDefaultAxes()
-        self.chart.zoom
-        self.chart.title="Cantidad de ventas mensuales"
+    #     self.chart = QChart()
+    #     self.chart.legend().hide()
+    #     self.chart.addSeries(self.barSeries)
+    #     self.chart.addSeries(self.lineSeries)
+    #     self.chart.createDefaultAxes()
+    #     self.chart.zoom
+    #     self.chart.title="Cantidad de ventas mensuales"
 
-        self.categories = self.datosTotal.grafico_ventas()
-        self.axisX = QBarCategoryAxis()
-        self.axisX.append(self.categories)
-        self.chart.setAxisX(self.axisX, self.lineSeries)
-        self.chart.setAxisX(self.axisX, self.barSeries)
-        self.chart.style = "font-size: 5px;"
+    #     self.categories = self.datosTotal.grafico_ventas()
+    #     self.axisX = QBarCategoryAxis()
+    #     self.axisX.append(self.categories)
+    #     self.chart.setAxisX(self.axisX, self.lineSeries)
+    #     self.chart.setAxisX(self.axisX, self.barSeries)
+    #     self.chart.style = "font-size: 5px;"
 
-        self.axisY = QValueAxis()
-        self.chart.setAxisY(self.axisY, self.lineSeries)
-        self.chart.setAxisY(self.axisY, self.barSeries)
-        self.axisY.setRange(0, 50)
+    #     self.axisY = QValueAxis()
+    #     self.chart.setAxisY(self.axisY, self.lineSeries)
+    #     self.chart.setAxisY(self.axisY, self.barSeries)
+    #     self.axisY.setRange(0, 50)
 
-        self.chartView = QChartView(self.chart)
+    #     self.chartView = QChartView(self.chart)
 
-        #self.chart.animationOptions=QChart.AllAnimations
+    #     #self.chart.animationOptions=QChart.AllAnimations
 
-        self.chartView.chart().theme=QChart.ChartThemeDark
-        self.line_charts_cont.addWidget(self.chartView)
+    #     self.chartView.chart().theme=QChart.ChartThemeDark
+    #     self.line_charts_cont.addWidget(self.chartView)
 
-    def keyPressEvent(self,event):
-        if(event.key() == Qt.Key_Plus):
-            self.chart.zoomIn()
-        elif(event.key() == Qt.Key_Minus):
-            self.chart.zoomOut()
-        elif(event.key() == Qt.Key_D):
-            self.chart.scroll(15,0)
-        elif(event.key() == Qt.Key_A):
-            self.chart.scroll(-15,0)
-        elif(event.key() == Qt.Key_W):
-            self.chart.scroll(0,10)
-        elif(event.key() == Qt.Key_S):
-            self.chart.scroll(0,-10)
-        elif(event.key() == Qt.Key_R):
-            self.chart.zoomReset()
+    # def keyPressEvent(self,event):
+    #     if(event.key() == Qt.Key_Plus):
+    #         self.chart.zoomIn()
+    #     elif(event.key() == Qt.Key_Minus):
+    #         self.chart.zoomOut()
+    #     elif(event.key() == Qt.Key_D):
+    #         self.chart.scroll(15,0)
+    #     elif(event.key() == Qt.Key_A):
+    #         self.chart.scroll(-15,0)
+    #     elif(event.key() == Qt.Key_W):
+    #         self.chart.scroll(0,10)
+    #     elif(event.key() == Qt.Key_S):
+    #         self.chart.scroll(0,-10)
+    #     elif(event.key() == Qt.Key_R):
+    #         self.chart.zoomReset()

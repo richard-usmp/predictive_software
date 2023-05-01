@@ -43,6 +43,10 @@ class Window_login(QMainWindow):
 
             self.boton_login.clicked.connect(self.checklogin)
 
+        def getUsuario(self):
+            usuario = self.usuario.text
+            return usuario
+            
         signalLogin = False
         def checklogin(self):
             usuario = str("'"+self.usuario.text+"'")
