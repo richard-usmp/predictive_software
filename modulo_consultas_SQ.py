@@ -156,6 +156,7 @@ class Window_consultas_SQ(QMainWindow):
         QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
         r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
         json_texto = r.text
+        print(json_texto)
         jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
         prediccion_ventas = jsondecoded["yhat_upper"]
         print(prediccion_ventas)
@@ -199,7 +200,8 @@ class Window_consultas_SQ(QMainWindow):
         
         options = { 'page-size': 'Letter', 'margin-top': '0.05in', 'margin-right': '0.05in', 'margin-bottom': '0.05in', 'margin-left': '0.05in', 'encoding':'UTF-8'}
         config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
-        ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
+        #ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
+        ruta_salida = f'predictive_software_{self.fecha.currentText}-{anio}.pdf'
         pdfkit.from_string(html, ruta_salida, options=options, configuration=config)
 
         QMessageBox.information(self, "Predicción...", f"La predición de ventas para el mes {self.fecha.currentText} es {prediccion_ventas}. Se exportó un pdf a {ruta_salida}.")
