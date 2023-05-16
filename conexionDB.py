@@ -25,7 +25,7 @@ class Registro_datos():
         row = [item[0] for item in cursor.fetchall()]
         return row
 
-    def inserta_material(self, Descripcion, Unid_medida,Precio_compra_unit, Stock, Mes, Anio):
+    def inserta_material(self, Descripcion, Unid_medida,Stock, Precio_compra_unit, Mes, Anio):
         cur = self.conexion.cursor()
         sql='''INSERT INTO dbo.Material 
         VALUES('{}', '{}', '{}', '{}', '{}', '{}')'''.format(Descripcion, Unid_medida, Stock, Precio_compra_unit,  Mes, Anio)
@@ -93,7 +93,8 @@ class Registro_datos():
 
     def buscar_Material_log(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT * FROM dbo.Material_log" 
+        #sql = "SELECT * FROM dbo.Material_log" 
+        sql = "SELECT ID_material, Descripcion, Stock, Precio_compra_unit, Dia, Mes, Anio, Estado, User_update FROM dbo.Material_log"
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro  

@@ -34,9 +34,9 @@ class Window_material_log(QMainWindow):
         self.tabla.wordWrap=False
         self.tabla.isSortingEnabled=False
         self.tabla.alternatingRowColors=True
-        self.tabla.columnCount= 10
+        self.tabla.columnCount= 9
         self.tabla.rowCount = 0
-        nombreColumnas = ("Id","ID_material", "Descripción", "Stock","Precio de compra unitario", "Día", "Mes", "Año", "Estado", "Usuario modificador")
+        nombreColumnas = ("ID_material", "Descripción", "Stock","Precio de compra unitario", "Día", "Mes", "Año", "Estado", "Usuario modificador")
         self.tabla.setHorizontalHeaderLabels(nombreColumnas)
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)
@@ -71,6 +71,6 @@ class Window_material_log(QMainWindow):
             self.tabla.setItem(row, 6, QTableWidgetItem(str(endian[6])))
             self.tabla.setItem(row, 7, QTableWidgetItem(str(endian[7])))
             self.tabla.setItem(row, 8, QTableWidgetItem(str(endian[8])))
-            self.tabla.setItem(row, 9, QTableWidgetItem(str(endian[9])))
+            #self.tabla.setItem(row, 9, QTableWidgetItem(str(endian[9])))
 
             row += 1
