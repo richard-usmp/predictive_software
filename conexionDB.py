@@ -183,8 +183,8 @@ class Registro_datos():
         df = pd.DataFrame(data)
         
         cursor = self.conexion.cursor()
-        print(df.head())
-        print(df.columns)
+        #print(df.head())
+        #print(df.columns)
         for row in df.itertuples():
             print(row[1])
             cursor.execute('''

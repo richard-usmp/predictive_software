@@ -1,41 +1,39 @@
-import sys
-import matplotlib.pyplot as plt
-from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+def generar_datos(num_datos):
+    datos_generados = []
+    ultimo_numero = int(datos[-1].split('-')[1])
+    
+    for i in range(num_datos):
+        nuevo_numero = ultimo_numero + i + 1
+        nuevo_dato = f'G-{str(nuevo_numero).zfill(8)}'
+        datos_generados.append(nuevo_dato)
+    
+    return datos_generados
 
+# Ejemplo de uso
+datos = [
+    'G-61126247',
+    'G-65142934',
+    'G-66997523',
+    'G-06392739',
+    'G-68518715',
+    'G-07285941',
+    'G-68471901',
+    'G-62762865',
+    'G-09702554',
+    'G-09828994',
+    'G-08429537',
+    'G-08243821',
+    'G-06731226',
+    'G-07066597',
+    'G-62041972',
+    'G-09440996',
+    'G-66307087',
+    'G-62662662',
+    'G-09973678',
+    'G-08851803'
+]
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        # Crear el widget de la gráfica
-        self.figure = plt.figure()
-        self.canvas = FigureCanvas(self.figure)
-
-        # Agregar la gráfica al layout
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.canvas)
-
-        # Crear el widget principal y establecer el layout
-        widget = QWidget()
-        widget.setLayout(self.layout)
-        self.setCentralWidget(widget)
-
-        # Crear la gráfica
-        ax = self.figure.add_subplot(111)
-        ax.plot([0, 1, 2, 3, 4, 5], [0, 1, 4, 9, 16, 25], 'ro-')
-        ax.set_xlabel('X Label')
-        ax.set_ylabel('Y Label')
-        ax.set_title('Title')
-
-        # Actualizar la gráfica
-        self.canvas.draw()
-
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+nuevos_datos = generar_datos(30)
+print(nuevos_datos)
 
 
