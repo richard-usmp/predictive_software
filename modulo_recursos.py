@@ -1,4 +1,4 @@
-from unicodedata import decimal
+from decimal import Decimal
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
@@ -225,10 +225,10 @@ class Window_recursos(QMainWindow):
         elif(self.cantidad_entrante.text!=""):
             get_stock = self.datosTotal.getStock(descripcion_app)
             if(self.cmb_sumar_restar.currentIndex==-1 or self.cmb_sumar_restar.currentIndex==0):
-                Stock_sumado = get_stock + decimal(Stock)
+                Stock_sumado = get_stock + Decimal(Stock)
                 Estado = "Suma"
             else:
-                Stock_sumado = get_stock - decimal(Stock)
+                Stock_sumado = get_stock - Decimal(Stock)
                 Estado = "Resta"
 
             if(descripcion_DB == Descripcion):

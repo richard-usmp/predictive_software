@@ -240,3 +240,11 @@ class Registro_datos():
         cursor.execute(sql)
         row = [item[0] for item in cursor.fetchall()]
         return row
+    
+    #Generar dataset
+    def generar_dataset(self):
+        cursor = self.conexion.cursor()
+        sql = "SELECT Fecha, max(Total_Prod_Vendidos) as 'Total_Prod_Vendidos' FROM dbo.Ventas GROUP BY Fecha ORDER BY Fecha" 
+        cursor.execute(sql)
+        registro = cursor.fetchall()
+        return registro

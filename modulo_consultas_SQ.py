@@ -1,5 +1,3 @@
-from re import template
-from tkinter.ttk import Separator
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
@@ -11,6 +9,8 @@ import jinja2
 import pdfkit
 from datetime import date
 import math
+import pandas as pd
+from datetime import datetime
 
 today = date.today()
 
@@ -97,6 +97,13 @@ class Window_consultas_SQ(QMainWindow):
         self.boton_mostrar_datos.geometry = QRect(350, 0, 200,45)
         self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
 
+        #boton generar dataset
+        self.boton_dataset = QPushButton(self.fr_contenedor_arriba)
+        self.boton_dataset.text = "Generar dataset en excel"
+        self.boton_dataset.clicked.connect(self.generar_dataset)
+        self.boton_dataset.geometry = QRect(510, 380, 250,55)
+        self.boton_dataset.styleSheet = "background: white; font-size: 15px;"
+
         #Texto Analisis predictivo
         self.texto_titulo = QLabel(self.fr_contenedor_arriba)
         self.texto_titulo.text = "Análisis Predictivo"  
@@ -149,6 +156,20 @@ class Window_consultas_SQ(QMainWindow):
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
 
+    def generar_dataset(self):
+        Mes = today.strftime("%m")
+        Anio = today.strftime("%Y")
+        Año_y_mes = str(Anio + "-" + Mes)
+        filename = 'Dataset/dataset' + '_' + Año_y_mes + '.xlsx'
+        dataset = self.datosTotal.generar_dataset()
+        data_list = [[item[0], item[1]] for item in dataset] #formato correcto para exportar a excel
+        data_list = sorted(data_list, key=lambda x: datetime.strptime(x[0], '%Y-%m')) # Ordenamiento correcto
+        data_list = [[f"{date.split('-')[0]}-{date.split('-')[1].zfill(2)}", value] for date, value in data_list] #Formato correcto para el modelo de prediccion
+        df = pd.DataFrame(data_list, columns=["Month", "TOTAL_PROD_VENDIDOS"])
+        df.to_excel(filename, index=False)
+        print(data_list)
+        QMessageBox.information(self, "Excel", f"Se generó un excel con el dataset en {filename}")
+
     def rest_api(self):
         anio = today.strftime("%Y")
         mes_ = self.fecha.currentIndex + 1
@@ -166,6 +187,7 @@ class Window_consultas_SQ(QMainWindow):
         q_pasta_para_metales_dura = round(2.31 * prediccion_ventas)
         q_pasta_para_metales_suave = round(2.46 * prediccion_ventas)
         q_pintura_metalica = round(2.11 * prediccion_ventas)
+        q_lija_para_metales_n80 = round(1.6 * prediccion_ventas)
         q_lija_para_metales_n180 = round(2.76 * prediccion_ventas)
         q_disco_de_corte_abl = round(2.16 * prediccion_ventas)
         q_trapo_de_metales_para_pulir = round(0.71 * prediccion_ventas)
