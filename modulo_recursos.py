@@ -142,6 +142,12 @@ class Window_recursos(QMainWindow):
 
         self.tabla_recursos.resize(800, 260)
         self.tabla_recursos.move(50, 50)
+
+        # campo de filtrado
+        self.filtro_edit = QLineEdit(self.fr_contenedor_abajo, placeholderText ="Filtrar por venta")
+        self.filtro_edit.returnPressed.connect(self.aplicarFiltro)
+        self.filtro_edit.geometry = QRect(760, 10, 200,33)
+
         #boton mostrar datos
         self.boton_mostrar_datos = QPushButton(self.fr_contenedor_abajo)
         self.boton_mostrar_datos.text = "Mostrar datos"
@@ -152,7 +158,7 @@ class Window_recursos(QMainWindow):
         #boton mostrar historial
         self.boton_mostrar = QPushButton(self.fr_contenedor_abajo)
         self.boton_mostrar.text = "Abrir historial"
-        self.boton_mostrar.geometry = QRect(550, 0, 200,45)
+        self.boton_mostrar.geometry = QRect(520, 0, 200,45)
         self.boton_mostrar.styleSheet = "background: white; font-size: 15px;"
 
     def datosTabla(self):
@@ -277,3 +283,20 @@ class Window_recursos(QMainWindow):
         self.fr_bienvenida.setLayout(self.titulo_layout)
 
         self.user_mod = username
+
+    def aplicarFiltro(self):
+        texto_filtro = self.filtro_edit.text
+        if texto_filtro:
+            num_filas = self.tabla_recursos.rowCount
+            for fila in range(num_filas):
+                ocultar_fila = True
+                for columna in range(self.tabla_recursos.columnCount):
+                    item = self.tabla_recursos.item(fila, columna)
+                    if texto_filtro == item.text():
+                        ocultar_fila = False
+                        break
+                self.tabla_recursos.setRowHidden(fila, ocultar_fila)
+        else:
+            num_filas = self.tabla_recursos.rowCount
+            for fila in range(num_filas):
+                self.tabla_recursos.setRowHidden(fila, False)

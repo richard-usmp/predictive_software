@@ -1,8 +1,73 @@
-lista = [['2016-1', 26], ['2016-2', 29], ['2016-3', 17], ['2016-4', 24], ['2016-5', 25], ['2016-6', 25], ['2016-7', 24], ['2016-8', 20], ['2016-9', 19], ['2016-10', 21], ['2016-11', 28], ['2016-12', 20], ['2017-1', 17], ['2017-2', 23], ['2017-3', 28], ['2017-4', 20], ['2017-5', 29], ['2017-6', 33], ['2017-7', 19], ['2017-8', 19], ['2017-9', 23], ['2017-10', 15], ['2017-11', 27], ['2017-12', 29], ['2018-1', 20], ['2018-2', 19], ['2018-3', 23], ['2018-4', 15], ['2018-5', 29], ['2018-6', 28], ['2018-7', 17], ['2018-8', 23], ['2018-9', 27], ['2018-10', 20], ['2018-11', 27], ['2018-12', 29], ['2019-1', 23], ['2019-2', 24], ['2019-3', 15], ['2019-4', 26], ['2019-5', 15], ['2019-6', 24], ['2019-7', 18], ['2019-8', 26], ['2019-9', 17], ['2019-10', 28], ['2019-11', 15], ['2019-12', 15], ['2020-1', 14], ['2020-2', 11], ['2020-3', 11], ['2020-4', 11], ['2020-5', 11], ['2020-6', 8],
-['2020-7', 11], ['2020-8', 13], ['2020-9', 17], ['2020-10', 10], ['2020-11', 11], ['2020-12', 16], ['2021-1', 16], ['2021-2', 20], ['2021-3', 22], ['2021-4', 17], ['2021-5', 23], ['2021-6', 17], ['2021-7', 19], ['2021-8', 22], ['2021-9', 20], ['2021-10', 26], ['2021-11', 25], ['2021-12', 18], ['2022-1', 17], ['2022-2', 23], ['2022-3', 28], ['2022-4', 20], ['2022-5', 29], ['2022-6', 33], ['2022-7', 19], ['2022-8', 19], ['2022-9', 23], ['2022-10', 15], ['2022-11', 27], ['2022-12', 29]]
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from conexionDB import *
 
-lista_formateada = [[f"{date.split('-')[0]}-{date.split('-')[1].zfill(2)}", value] for date, value in lista]
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.datosTotal = Registro_datos()
+        self.setWindowTitle("Tabla de proveedores")
+        self.setGeometry(100, 100, 900, 400)
 
-print(lista_formateada)
+        self.central_widget = QWidget()
+        self.setCentralWidget(self.central_widget)
+        self.layout = QVBoxLayout(self.central_widget)
+
+        # tabla
+        self.tabla_proveedores = QTableWidget()
+        self.tabla_proveedores.setDragDropOverwriteMode(False)
+        self.tabla_proveedores.setSelectionBehavior(QTableWidget.SelectRows)
+        self.tabla_proveedores.setSelectionMode(QTableWidget.SingleSelection)
+        self.tabla_proveedores.setWordWrap(False)
+        self.tabla_proveedores.setSortingEnabled(False)
+        self.tabla_proveedores.setAlternatingRowColors(True)
+        self.tabla_proveedores.setColumnCount(6)
+        self.tabla_proveedores.setRowCount(0)
+        nombreColumnas = ("Id", "Empresa", "Representante", "RUC", "Celular", "E-mail")
+        self.tabla_proveedores.setHorizontalHeaderLabels(nombreColumnas)
+        for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
+            self.tabla_proveedores.setColumnWidth(indice, ancho)
+        header = self.tabla_proveedores.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+
+        self.layout.addWidget(self.tabla_proveedores)
+
+        # campo de filtrado
+        self.filtro_edit = QLineEdit()
+        self.filtro_edit.setPlaceholderText("Filtrar por empresa")
+        self.layout.addWidget(self.filtro_edit)
+
+        # botón mostrar datos
+        self.boton_mostrar_proveedor = QPushButton("Mostrar datos")
+        self.boton_mostrar_proveedor.setStyleSheet("background: white; font-size: 15px;")
+        self.layout.addWidget(self.boton_mostrar_proveedor)
+
+        self.boton_mostrar_proveedor.clicked.connect(self.datosTabla)
+
+    def datosTabla(self):
+        datos = self.datosTotal.buscar_proveedores()
+
+        self.tabla_proveedores.clearContents()
+
+        row = 0
+        for endian in datos:
+            self.tabla_proveedores.rowCount=row + 1
+                
+            idDato = QTableWidgetItem(str(endian[0]))
+            #idDato.setTextAlignment(4)
+                
+            self.tabla_proveedores.setItem(row, 0, idDato)
+            self.tabla_proveedores.setItem(row, 1, QTableWidgetItem(endian[1]))
+            self.tabla_proveedores.setItem(row, 2, QTableWidgetItem(endian[2]))
+            self.tabla_proveedores.setItem(row, 3, QTableWidgetItem(endian[3]))
+            self.tabla_proveedores.setItem(row, 4, QTableWidgetItem(endian[4]))
+            self.tabla_proveedores.setItem(row, 5, QTableWidgetItem(endian[5]))
+
+            row += 1
+
+app = QApplication([])
+window = MainWindow()
+window.show()
+app.exec()
 
 

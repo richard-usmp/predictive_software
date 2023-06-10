@@ -50,6 +50,7 @@ class predictive_software:
         self.main.boton4.clicked.connect(self.entrar_Ventas)
         self.main.boton5.clicked.connect(self.entrar_Consultas)
         self.main.boton6.clicked.connect(self.entrar_perfil)
+        self.main.boton8.clicked.connect(self.cerrar_sesion)
 
         self.main_admin.boton1.clicked.connect(self.entrar_dashboard_admin)
         self.main_admin.boton2.clicked.connect(self.entrar_Proveedores)
@@ -58,6 +59,7 @@ class predictive_software:
         self.main_admin.boton5.clicked.connect(self.entrar_Consultas)
         self.main_admin.boton6.clicked.connect(self.entrar_crear_usuario)
         self.main_admin.boton7.clicked.connect(self.entrar_perfil)
+        self.main_admin.boton8.clicked.connect(self.cerrar_sesion)
 
         self.modulo_proveedores.boton1.clicked.connect(self.entrar_dashboard)
         self.modulo_proveedores.boton2.clicked.connect(self.entrar_Proveedores)
@@ -184,6 +186,17 @@ class predictive_software:
         self.modulo_material_log.hide()
         self.perfil.show()
         self.perfil.setup_name_user(self.login.getUsuario())
+
+    def cerrar_sesion(self):
+        self.main.hide()
+        self.modulo_proveedores.hide()
+        self.modulo_recursos.hide()
+        self.modulo_ventas.hide()
+        self.modulo_consultas_SQ.hide()
+        self.main_admin.hide()
+        self.login.usuario.clear()
+        self.login.contra.clear()
+        self.login.show()
 
 app = QApplication(sys.argv)
 

@@ -57,6 +57,11 @@ class Window_main(QMainWindow):
         self.boton6.geometry = QRect(80, 420, 200,45)
         self.boton6.styleSheet = "background: white; font-size: 25px;"
 
+        self.boton8 = QPushButton(self.fr_titulo)
+        self.boton8.text = "Cerrar Sesión"
+        self.boton8.geometry = QRect(80, 490, 200,45)
+        self.boton8.styleSheet = "background: white; font-size: 25px;"
+
         #cuadro de dialogo
         self.dialogo = QDialog(self)
         self.dialogo.setFixedSize(300, 300)

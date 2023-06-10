@@ -140,6 +140,12 @@ class Window_proveedores(QMainWindow):
 
         self.tabla_proveedores.resize(800, 260)
         self.tabla_proveedores.move(50, 50)
+
+        # campo de filtrado
+        self.filtro_edit = QLineEdit(self.fr_contenedor_abajo, placeholderText ="Filtrar por empresa")
+        self.filtro_edit.returnPressed.connect(self.aplicarFiltro)
+        self.filtro_edit.geometry = QRect(560, 10, 200,33)
+
         #boton mostrar datos
         self.boton_mostrar_proveedor = QPushButton(self.fr_contenedor_abajo)
         self.boton_mostrar_proveedor.text = "Mostrar datos"
@@ -208,3 +214,20 @@ class Window_proveedores(QMainWindow):
         self.titulo_layout.addWidget(self.titulo)
 
         self.fr_bienvenida.setLayout(self.titulo_layout)
+
+    def aplicarFiltro(self):
+        texto_filtro = self.filtro_edit.text
+        if texto_filtro:
+            num_filas = self.tabla_proveedores.rowCount
+            for fila in range(num_filas):
+                ocultar_fila = True
+                for columna in range(self.tabla_proveedores.columnCount):
+                    item = self.tabla_proveedores.item(fila, columna)
+                    if texto_filtro == item.text():
+                        ocultar_fila = False
+                        break
+                self.tabla_proveedores.setRowHidden(fila, ocultar_fila)
+        else:
+            num_filas = self.tabla_proveedores.rowCount
+            for fila in range(num_filas):
+                self.tabla_proveedores.setRowHidden(fila, False)
