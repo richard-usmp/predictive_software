@@ -144,7 +144,7 @@ class Window_recursos(QMainWindow):
         self.tabla_recursos.move(50, 50)
 
         # campo de filtrado
-        self.filtro_edit = QLineEdit(self.fr_contenedor_abajo, placeholderText ="Filtrar por venta")
+        self.filtro_edit = QLineEdit(self.fr_contenedor_abajo, placeholderText ="Filtrar por recurso")
         self.filtro_edit.returnPressed.connect(self.aplicarFiltro)
         self.filtro_edit.geometry = QRect(760, 10, 200,33)
 

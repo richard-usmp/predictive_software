@@ -171,75 +171,78 @@ class Window_consultas_SQ(QMainWindow):
         QMessageBox.information(self, "Excel", f"Se generó un excel con el dataset en {filename}")
 
     def rest_api(self):
-        anio = today.strftime("%Y")
-        mes_ = self.fecha.currentIndex + 1
-        cantidad_ventas_mes = self.cant_venta_mes_pasado.text
-        QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
-        r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
-        json_texto = r.text
-        print(json_texto)
-        jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
-        prediccion_ventas = jsondecoded["yhat_upper"]
-        print(prediccion_ventas)
-        q_aluminio = round(5 * prediccion_ventas)
-        q_pernos_de_aluminio = round(2.71 * prediccion_ventas)
-        q_combustible = round(1.91 * prediccion_ventas)
-        q_pasta_para_metales_dura = round(2.31 * prediccion_ventas)
-        q_pasta_para_metales_suave = round(2.46 * prediccion_ventas)
-        q_pintura_metalica = round(2.11 * prediccion_ventas)
-        q_lija_para_metales_n80 = round(1.6 * prediccion_ventas)
-        q_lija_para_metales_n180 = round(2.76 * prediccion_ventas)
-        q_disco_de_corte_abl = round(2.16 * prediccion_ventas)
-        q_trapo_de_metales_para_pulir = round(0.71 * prediccion_ventas)
-        q_petroleo = round(2.11 * prediccion_ventas)
-        q_tiner = round(2.56 * prediccion_ventas)
-        q_sacos_para_productos_finales = round(2.71 * prediccion_ventas)
-        q_madera = round(5.66 * prediccion_ventas)
-        q_pernos_de_cobre = round(2.61 * prediccion_ventas)
-        q_rafia = round(2.71 * prediccion_ventas)
-        q_disco_de_corte_acl = round(1.91 * prediccion_ventas)
-        q_jebes_abl = round(2.06 * prediccion_ventas)
-        q_jebes_acl = round(2.36 * prediccion_ventas)
-        q_tornillos_de_aluminio = round(2.21 * prediccion_ventas)
-        q_remaches_de_aluminio = round(2.46 * prediccion_ventas)
-        q_brocas_para_aluminio = round(1.41 * prediccion_ventas)
-        q_lija_para_metales_n120 = round(2.41 * prediccion_ventas)
-        q_fajas_metalicas = round(2.06 * prediccion_ventas)
-        q_pasta_para_metales_roja = round(2.11 * prediccion_ventas)
-        q_lija_para_metales_60 = round(1.96 * prediccion_ventas)
-        q_aceros_microaleados = round(1 * prediccion_ventas)##
-        q_aceros_refosforados = round(1 * prediccion_ventas)
-        q_madera_sintetica = round(1.11 * prediccion_ventas)
-        q_pernos_allen_con_cabeza_cilindrica = round(0.994 * prediccion_ventas)
-        q_perno_prisionero = round(1.01 * prediccion_ventas)
-        q_perno_en_acero_inoxidable = round(1.05 * prediccion_ventas)
-        q_aceros_de_fase_doble = round(0.84 * prediccion_ventas)
-        q_perno_cabeza_redonda = round(1.19 * prediccion_ventas)
-        q_perno_cabeza_hexagonal_sae_grado_5 = round(1.1 * prediccion_ventas)
+        if(self.fecha.currentIndex!=-1 or self.cant_venta_mes_pasado.text!=""):
+            anio = today.strftime("%Y")
+            mes_ = self.fecha.currentIndex + 1
+            cantidad_ventas_mes = self.cant_venta_mes_pasado.text
+            QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
+            r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
+            json_texto = r.text
+            jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
+            prediccion_ventas = jsondecoded["yhat_upper"]
+            print(prediccion_ventas)
+            q_aluminio = round(5 * prediccion_ventas)
+            q_pernos_de_aluminio = round(2.71 * prediccion_ventas)
+            q_combustible = round(1.91 * prediccion_ventas)
+            q_pasta_para_metales_dura = round(2.31 * prediccion_ventas)
+            q_pasta_para_metales_suave = round(2.46 * prediccion_ventas)
+            q_pintura_metalica = round(2.11 * prediccion_ventas)
+            q_lija_para_metales_n80 = round(1.6 * prediccion_ventas)
+            q_lija_para_metales_n180 = round(2.76 * prediccion_ventas)
+            q_disco_de_corte_abl = round(2.16 * prediccion_ventas)
+            q_trapo_de_metales_para_pulir = round(0.71 * prediccion_ventas)
+            q_petroleo = round(2.11 * prediccion_ventas)
+            q_tiner = round(2.56 * prediccion_ventas)
+            q_sacos_para_productos_finales = round(2.71 * prediccion_ventas)
+            q_madera = round(5.66 * prediccion_ventas)
+            q_pernos_de_cobre = round(2.61 * prediccion_ventas)
+            q_rafia = round(2.71 * prediccion_ventas)
+            q_disco_de_corte_acl = round(1.91 * prediccion_ventas)
+            q_jebes_abl = round(2.06 * prediccion_ventas)
+            q_jebes_acl = round(2.36 * prediccion_ventas)
+            q_tornillos_de_aluminio = round(2.21 * prediccion_ventas)
+            q_remaches_de_aluminio = round(2.46 * prediccion_ventas)
+            q_brocas_para_aluminio = round(1.41 * prediccion_ventas)
+            q_lija_para_metales_n120 = round(2.41 * prediccion_ventas)
+            q_fajas_metalicas = round(2.06 * prediccion_ventas)
+            q_pasta_para_metales_roja = round(2.11 * prediccion_ventas)
+            q_lija_para_metales_60 = round(1.96 * prediccion_ventas)
+            q_aceros_microaleados = round(1 * prediccion_ventas)##
+            q_aceros_refosforados = round(1 * prediccion_ventas)
+            q_madera_sintetica = round(1.11 * prediccion_ventas)
+            q_pernos_allen_con_cabeza_cilindrica = round(0.994 * prediccion_ventas)
+            q_perno_prisionero = round(1.01 * prediccion_ventas)
+            q_perno_en_acero_inoxidable = round(1.05 * prediccion_ventas)
+            q_aceros_de_fase_doble = round(0.84 * prediccion_ventas)
+            q_perno_cabeza_redonda = round(1.19 * prediccion_ventas)
+            q_perno_cabeza_hexagonal_sae_grado_5 = round(1.1 * prediccion_ventas)
 
 
-        #PDF
-        ruta_template = 'D:/QtDesigner/predictive_software/template.html'
-        info = {"mes":self.fecha.currentText, "prediccion_ventas": math.floor(prediccion_ventas) , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_de_aluminio, "q_combustible": q_combustible, 
-                "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, 
-                "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_de_corte_abl, "q_trapo_metales_para_pulir": q_trapo_de_metales_para_pulir, "q_petroleo": q_petroleo, 
-                "q_tiner": q_tiner, "q_sacos_para_productos_finales": q_sacos_para_productos_finales, "q_madera": q_madera, "q_pernos_cobre": q_pernos_de_cobre, "q_rafia": q_rafia, 
-                "q_disco_corte_acl": q_disco_de_corte_acl, "q_jebes_abl": q_jebes_abl, "q_jebes_acl": q_jebes_acl, "q_tornillos_aluminio": q_tornillos_de_aluminio, "q_remaches_aluminio": q_remaches_de_aluminio, 
-                "q_brocas_para_aluminio": q_brocas_para_aluminio, "q_lija_para_metales_n120": q_lija_para_metales_n120, "q_fajas_metalicas": q_fajas_metalicas, "q_pasta_para_metales_roja": q_pasta_para_metales_roja, 
-                "q_lija_para_metales_60": q_lija_para_metales_60, "q_aceros_microaleados": q_aceros_microaleados, "q_aceros_refosforados": q_aceros_refosforados, "q_madera_sintetica": q_madera_sintetica, 
-                "q_pernos_allen_con_cabeza_cilindrica": q_pernos_allen_con_cabeza_cilindrica, "q_perno_prisionero": q_perno_prisionero, "q_perno_en_acero_inoxidable": q_perno_en_acero_inoxidable,
-                "q_aceros_de_fase_doble": q_aceros_de_fase_doble, "q_perno_cabeza_redonda": q_perno_cabeza_redonda, "q_perno_cabeza_hexagonal_sae_grado_5": q_perno_cabeza_hexagonal_sae_grado_5}
-        nombre_template = ruta_template.split('/')[-1]
-        ruta_template = ruta_template.replace(nombre_template,'')
-        
-        env = jinja2.Environment(loader=jinja2.FileSystemLoader(ruta_template))
-        template=env.get_template(nombre_template)
-        html = template.render(info)
-        
-        options = { 'page-size': 'Letter', 'margin-top': '0.05in', 'margin-right': '0.05in', 'margin-bottom': '0.05in', 'margin-left': '0.05in', 'encoding':'UTF-8'}
-        config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
-        #ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
-        ruta_salida = f'predictive_software_{self.fecha.currentText}-{anio}.pdf'
-        pdfkit.from_string(html, ruta_salida, options=options, configuration=config)
+            #PDF
+            ruta_template = 'D:/Ricardo/Documents/predictive_software/template.html'
+            info = {"mes":self.fecha.currentText, "prediccion_ventas": math.floor(prediccion_ventas) , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_de_aluminio, "q_combustible": q_combustible, 
+                    "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, 
+                    "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_de_corte_abl, "q_trapo_metales_para_pulir": q_trapo_de_metales_para_pulir, "q_petroleo": q_petroleo, 
+                    "q_tiner": q_tiner, "q_sacos_para_productos_finales": q_sacos_para_productos_finales, "q_madera": q_madera, "q_pernos_cobre": q_pernos_de_cobre, "q_rafia": q_rafia, 
+                    "q_disco_corte_acl": q_disco_de_corte_acl, "q_jebes_abl": q_jebes_abl, "q_jebes_acl": q_jebes_acl, "q_tornillos_aluminio": q_tornillos_de_aluminio, "q_remaches_aluminio": q_remaches_de_aluminio, 
+                    "q_brocas_para_aluminio": q_brocas_para_aluminio, "q_lija_para_metales_n120": q_lija_para_metales_n120, "q_fajas_metalicas": q_fajas_metalicas, "q_pasta_para_metales_roja": q_pasta_para_metales_roja, 
+                    "q_lija_para_metales_60": q_lija_para_metales_60, "q_aceros_microaleados": q_aceros_microaleados, "q_aceros_refosforados": q_aceros_refosforados, "q_madera_sintetica": q_madera_sintetica, 
+                    "q_pernos_allen_con_cabeza_cilindrica": q_pernos_allen_con_cabeza_cilindrica, "q_perno_prisionero": q_perno_prisionero, "q_perno_en_acero_inoxidable": q_perno_en_acero_inoxidable,
+                    "q_aceros_de_fase_doble": q_aceros_de_fase_doble, "q_perno_cabeza_redonda": q_perno_cabeza_redonda, "q_perno_cabeza_hexagonal_sae_grado_5": q_perno_cabeza_hexagonal_sae_grado_5}
+            nombre_template = ruta_template.split('/')[-1]
+            ruta_template = ruta_template.replace(nombre_template,'')
+            
+            env = jinja2.Environment(loader=jinja2.FileSystemLoader(ruta_template))
+            template=env.get_template(nombre_template)
+            html = template.render(info)
+            
+            options = { 'page-size': 'Letter', 'margin-top': '0.05in', 'margin-right': '0.05in', 'margin-bottom': '0.05in', 'margin-left': '0.05in', 'encoding':'UTF-8'}
+            config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
+            #ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
+            ruta_salida = f'predictive_software_{self.fecha.currentText}-{anio}.pdf'
+            pdfkit.from_string(html, ruta_salida, options=options, configuration=config)
 
-        QMessageBox.information(self, "Predicción...", f"La predición de ventas para el mes {self.fecha.currentText} es {prediccion_ventas}. Se exportó un pdf a {ruta_salida}.")
+            QMessageBox.information(self, "Predicción...", f"La predición de ventas para el mes {self.fecha.currentText} es {prediccion_ventas}. Se exportó un pdf a {ruta_salida}.")
+        else:
+            print("No ha seleccionado ningún mes para predecir o no ha escrito la cantidad de ventas.")
+            QMessageBox.warning(self, "Predicción", "No ha seleccionado ningún mes para predecir o no ha escrito la cantidad de ventas.")

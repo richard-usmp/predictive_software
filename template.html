@@ -1,194 +1,214 @@
-<meta charset="UTF-8">
-<h1 style="text-align: center;"><span style="text-decoration: underline;">Predictive Software</span></h1>
-<hr />
-<h3>Cantidad de ventas predichas para {{mes}} = {{prediccion_ventas}}</h3>
-<table style="border-collapse: collapse; width: 100%; height: 504px;" border="1">
-    <tbody>
-        <tr style="height: 36px;">
-            <td style="width: 50%; height: 36px;" width="209">
-                <h4 style="text-align: center;">Nombre</h4>
-            </td>
-            <td style="width: 25%; height: 36px;">
-                <h4 style="text-align: center;">Cantidad recomendada a comprar para el mes de {{mes}}</h4>
-            </td>
-            <td style="width: 25%; height: 36px;">
-                <h4 style="text-align: center;">Unidad de medida</h4>
-            </td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;" width="209">Aluminio</td>
-            <td style="width: 25%; height: 18px;">{{q_aluminio}}</td>
-            <td style="width: 25%; height: 18px;" width="209">Plancha</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pernos de aluminio</td>
-            <td style="width: 25%; height: 18px;" width="231">{{q_pernos_aluminio}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Combustible</td>
-            <td style="width: 25%; height: 18px;">{{q_combustible}}</td>
-            <td style="width: 25%; height: 18px;">Galon</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pasta para metales dura</td>
-            <td style="width: 25%; height: 18px;">{{q_pasta_para_metales_dura}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pasta para metales suave</td>
-            <td style="width: 25%; height: 18px;">{{q_pasta_para_metales_suave}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pintura metálica</td>
-            <td style="width: 25%; height: 18px;">{{q_pintura_metalica}}</td>
-            <td style="width: 25%; height: 18px;">Galon</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Lija para metales N°80</td>
-            <td style="width: 25%; height: 18px;">{{q_lija_para_metales_n80}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Lija para metales N°180</td>
-            <td style="width: 25%; height: 18px;">{{q_lija_para_metales_n180}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Disco de corte ABL</td>
-            <td style="width: 25%; height: 18px;">{{q_disco_corte_abl}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Trapo de metales para pulir</td>
-            <td style="width: 25%; height: 18px;">{{q_trapo_metales_para_pulir}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Petróleo</td>
-            <td style="width: 25%; height: 18px;">{{q_petroleo}}</td>
-            <td style="width: 25%; height: 18px;">Galon</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Tiner</td>
-            <td style="width: 25%; height: 18px;">{{q_tiner}}</td>
-            <td style="width: 25%; height: 18px;">Litros</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Sacos para productos finales</td>
-            <td style="width: 25%; height: 18px;">{{q_sacos_para_productos_finales}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Madera</td>
-            <td style="width: 25%; height: 18px;">{{q_madera}}</td>
-            <td style="width: 25%; height: 18px;">Pie tablar</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pernos de Cobre</td>
-            <td style="width: 25%; height: 18px;">{{q_pernos_cobre}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Rafia</td>
-            <td style="width: 25%; height: 18px;">{{q_rafia}}</td>
-            <td style="width: 25%; height: 18px;">Rollo</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Disco de corte ACL</td>
-            <td style="width: 25%; height: 18px;">{{q_disco_corte_acl}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Jebes ABL</td>
-            <td style="width: 25%; height: 18px;">{{q_jebes_abl}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Jebes ACL</td>
-            <td style="width: 25%; height: 18px;">{{q_jebes_acl}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Tornillos de aluminio</td>
-            <td style="width: 25%; height: 18px;">{{q_tornillos_aluminio}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Remaches de aluminio</td>
-            <td style="width: 25%; height: 18px;">{{q_remaches_aluminio}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Brocas para aluminio</td>
-            <td style="width: 25%; height: 18px;">{{q_brocas_para_aluminio}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Lija para metales N°120</td>
-            <td style="width: 25%; height: 18px;">{{q_lija_para_metales_n120}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Fajas metálicas</td>
-            <td style="width: 25%; height: 18px;">{{q_fajas_metalicas}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pasta para metales roja</td>
-            <td style="width: 25%; height: 18px;">{{q_pasta_para_metales_roja}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Lija para metales 60</td>
-            <td style="width: 25%; height: 18px;">{{q_lija_para_metales_60}}</td>
-            <td style="width: 25%; height: 18px;">Unidad</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Aceros microaleados</td>
-            <td style="width: 25%; height: 18px;">{{q_aceros_microaleados}}</td>
-            <td style="width: 25%; height: 18px;">Plancha</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Aceros refosforados</td>
-            <td style="width: 25%; height: 18px;">{{q_aceros_refosforados}}</td>
-            <td style="width: 25%; height: 18px;">Plancha</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Madera sintetica</td>
-            <td style="width: 25%; height: 18px;">{{q_madera_sintetica}}</td>
-            <td style="width: 25%; height: 18px;">Pie tablar</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Pernos allen con cabeza cilindrica</td>
-            <td style="width: 25%; height: 18px;">{{q_pernos_allen_con_cabeza_cilindrica}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Perno prisionero</td>
-            <td style="width: 25%; height: 18px;">{{q_perno_prisionero}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Perno en acero inoxidable</td>
-            <td style="width: 25%; height: 18px;">{{q_perno_en_acero_inoxidable}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Aceros de fase doble</td>
-            <td style="width: 25%; height: 18px;">{{q_aceros_de_fase_doble}}</td>
-            <td style="width: 25%; height: 18px;">Plancha</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Perno cabeza redonda</td>
-            <td style="width: 25%; height: 18px;">{{q_perno_cabeza_redonda}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-        <tr style="height: 18px;">
-            <td style="width: 50%; height: 18px;">Perno cabeza hexagonal sae grado 5</td>
-            <td style="width: 25%; height: 18px;">{{q_perno_cabeza_hexagonal_sae_grado_5}}</td>
-            <td style="width: 25%; height: 18px;">Caja</td>
-        </tr>
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en" style="font-family: Arial;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;"><span style="text-decoration: underline;">Predictive Software</span></h1>
+    <hr />
+    <h2>Se estima que la demanda de ventas de carrocerías para el mes de {{mes}} será de aproximadamente de
+        {{prediccion_ventas}}.</h2>
+    <h3>Basandonos en esta información se ha generado una predicción cuantitativa de la cantidad de materia prima recomendada para ser adquirida,
+        permitiendo así optimizar los procesos de compra y garantizar el abastecimiento adecuado de recursos.</h3>
+    <table style="border-collapse: collapse; width: 100%; height: 504px;" border="1">
+        <tbody>
+            <tr style="height: 36px;">
+                <td style="width: 50%; height: 36px;" width="209">
+                    <h4 style="text-align: center;">Descripción de materia prima</h4>
+                </td>
+                <td style="width: 25%; height: 36px;">
+                    <h4 style="text-align: center;">Cantidad recomendada a comprar para el mes de {{mes}}</h4>
+                </td>
+                <td style="width: 25%; height: 36px;">
+                    <h4 style="text-align: center;">Unidad de medida</h4>
+                </td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;" width="209">Aluminio</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_aluminio}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;" width="209">Plancha</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pernos de aluminio</td>
+                <td style="width: 25%; height: 18px; text-align: center;" width="231">{{q_pernos_aluminio}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Combustible</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_combustible}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Galon</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pasta para metales dura</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pasta_para_metales_dura}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pasta para metales suave</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pasta_para_metales_suave}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pintura metálica</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pintura_metalica}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Galon</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Lija para metales N°80</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_lija_para_metales_n80}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Lija para metales N°180</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_lija_para_metales_n180}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Disco de corte ABL</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_disco_corte_abl}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Trapo de metales para pulir</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_trapo_metales_para_pulir}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Petróleo</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_petroleo}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Galon</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Tiner</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_tiner}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Litros</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Sacos para productos finales</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_sacos_para_productos_finales}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Madera</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_madera}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Pie tablar</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pernos de Cobre</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pernos_cobre}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Rafia</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_rafia}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Rollo</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Disco de corte ACL</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_disco_corte_acl}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Jebes ABL</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_jebes_abl}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Jebes ACL</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_jebes_acl}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Tornillos de aluminio</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_tornillos_aluminio}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Remaches de aluminio</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_remaches_aluminio}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Brocas para aluminio</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_brocas_para_aluminio}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Lija para metales N°120</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_lija_para_metales_n120}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Fajas metálicas</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_fajas_metalicas}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pasta para metales roja</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pasta_para_metales_roja}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Lija para metales 60</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_lija_para_metales_60}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Unidad</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Aceros microaleados</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_aceros_microaleados}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Plancha</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Aceros refosforados</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_aceros_refosforados}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Plancha</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Madera sintetica</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_madera_sintetica}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Pie tablar</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Pernos allen con cabeza cilindrica</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_pernos_allen_con_cabeza_cilindrica}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Perno prisionero</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_perno_prisionero}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Perno en acero inoxidable</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_perno_en_acero_inoxidable}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Aceros de fase doble</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_aceros_de_fase_doble}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Plancha</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Perno cabeza redonda</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_perno_cabeza_redonda}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+            <tr style="height: 18px;">
+                <td style="width: 50%; height: 18px; text-align: center;">Perno cabeza hexagonal sae grado 5</td>
+                <td style="width: 25%; height: 18px; text-align: center;">{{q_perno_cabeza_hexagonal_sae_grado_5}}</td>
+                <td style="width: 25%; height: 18px; text-align: center;">Caja</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p>Recomendamos realizar un análisis detallado de los proveedores disponibles en el mercado, considerando su
+        capacidad de suministro, calidad y costos asociados. Conocer la demanda futura nos permitirá negociar acuerdos
+        más sólidos con los proveedores y garantizar que la cantidad de materia prima solicitada esté alineada con las
+        necesidades de producción estimadas.</p>
+</body>
+
+</html>
