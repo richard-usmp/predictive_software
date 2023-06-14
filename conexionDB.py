@@ -229,14 +229,14 @@ class Registro_datos():
     #graficos
     def grafico_ventas(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT DISTINCT Fecha FROM dbo.Ventas" 
+        sql = "SELECT DISTINCT Fecha FROM dbo.Ventas ORDER BY Fecha" 
         cursor.execute(sql)
         row = [item[0] for item in cursor.fetchall()]
         return row
 
     def grafico_ventas_cantidad(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT max(Total_Prod_Vendidos) FROM dbo.Ventas GROUP BY Fecha" 
+        sql = "SELECT max(Total_Prod_Vendidos) FROM dbo.Ventas GROUP BY Fecha ORDER BY Fecha" 
         cursor.execute(sql)
         row = [item[0] for item in cursor.fetchall()]
         return row
