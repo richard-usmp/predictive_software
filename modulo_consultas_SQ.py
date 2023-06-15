@@ -238,7 +238,6 @@ class Window_consultas_SQ(QMainWindow):
             
             options = { 'page-size': 'Letter', 'margin-top': '0.05in', 'margin-right': '0.05in', 'margin-bottom': '0.05in', 'margin-left': '0.05in', 'encoding':'UTF-8'}
             config = pdfkit.configuration(wkhtmltopdf='C:/Program Files/wkhtmltopdf/bin/wkhtmltopdf.exe')
-            #ruta_salida = f'D:/QtDesigner/predictive_software/predictive_software_{self.fecha.currentText}-{anio}.pdf'
             ruta_salida = f'predictive_software_{self.fecha.currentText}-{anio}.pdf'
             pdfkit.from_string(html, ruta_salida, options=options, configuration=config)
 

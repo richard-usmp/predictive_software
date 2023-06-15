@@ -50,6 +50,25 @@ class Window_material_log(QMainWindow):
         self.boton_mostrar_datos.geometry = QRect(450, 0, 200,45)
         self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
 
+        #boton generar reporte
+        self.boton_mostrar_datos = QPushButton(self.fr_frame_tabla)
+        self.boton_mostrar_datos.text = "Exportar a excel"
+        self.boton_mostrar_datos.clicked.connect(self.generarReporteExcel)
+        self.boton_mostrar_datos.geometry = QRect(660, 0, 200,45)
+        self.boton_mostrar_datos.styleSheet = "background: white; font-size: 15px;"
+
+    def generarReporteExcel(self):
+        dia = today.strftime("%d")
+        mes = today.strftime("%m")
+        anio = today.strftime("%Y")
+        fecha = str(anio + "-" + mes + "-" + dia)
+        filename = 'Reportes/historial_recursos' + '_' + fecha + '.xlsx'
+        data_list = self.datosTotal.buscar_Material_log()
+        data_list = [[item[0], item[1], item[2], item[3], item[4], item[5], item[6], item[7], item[8]] for item in data_list]
+        df = pd.DataFrame(data_list, columns=["ID_material", "Descripción", "Stock","Precio de compra unitario", "Día", "Mes", "Año", "Estado", "Usuario modificador"])
+        df.to_excel(filename, index=False)
+        QMessageBox.information(self, "Excel", f"Se generó un excel con el historial de recursos en {filename}")
+
     def datosTabla(self):
         datos = self.datosTotal.buscar_Material_log()
 

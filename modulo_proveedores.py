@@ -2,7 +2,10 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 import sys
 from conexionDB import *
+from datetime import date
 from __feature__ import true_property
+
+today = date.today()
 
 class Window_proveedores(QMainWindow):
     def setupUi(self):
@@ -152,6 +155,25 @@ class Window_proveedores(QMainWindow):
         self.boton_mostrar_proveedor.clicked.connect(self.datosTabla)
         self.boton_mostrar_proveedor.geometry = QRect(300, 0, 200,45)
         self.boton_mostrar_proveedor.styleSheet = "background: white; font-size: 15px;"
+
+        #boton generar reporte
+        self.boton_mostrar_datos = QPushButton(self.fr_contenedor_abajo)
+        self.boton_mostrar_datos.text = "Exportar a excel"
+        self.boton_mostrar_datos.clicked.connect(self.generarReporteExcel)
+        self.boton_mostrar_datos.geometry = QRect(710, 310, 200,38)
+        self.boton_mostrar_datos.styleSheet = "background: white; font-size: 12px;"
+
+    def generarReporteExcel(self):
+        dia = today.strftime("%d")
+        mes = today.strftime("%m")
+        anio = today.strftime("%Y")
+        fecha = str(anio + "-" + mes + "-" + dia)
+        filename = 'Reportes/proveedores' + '_' + fecha + '.xlsx'
+        data_list = self.datosTotal.buscar_proveedores()
+        data_list = [[item[0], item[1], item[2], item[3], item[4], item[5]] for item in data_list]
+        df = pd.DataFrame(data_list, columns=["Id", "Empresa", "Representante", "RUC", "Celular", "E-mail"])
+        df.to_excel(filename, index=False)
+        QMessageBox.information(self, "Excel", f"Se generó un excel con los recursos en {filename}")
     
     def datosTabla(self):
         datos = self.datosTotal.buscar_proveedores()
