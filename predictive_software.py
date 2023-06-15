@@ -10,7 +10,7 @@ from main_admin import Window_main_admin
 from crear_usuario import Window_crear_usuario
 from perfil_user import Window_perfil
 import sys
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 from conexionDB import *
 
 class predictive_software:
@@ -168,7 +168,11 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
-        self.modulo_consultas_SQ.show()
+        if(self.login.getUsuario() == "user_prueba"):
+            self.modulo_consultas_SQ.show()
+        else:
+            QMessageBox.warning(self.main, "Error", "No eres administrador.")
+            self.main.show()
         self.modulo_consultas_SQ.setup_name_user(self.login.getUsuario())
 
     def entrar_Recursos_log(self):
