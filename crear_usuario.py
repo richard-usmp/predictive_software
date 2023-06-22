@@ -52,19 +52,25 @@ class Window_crear_usuario(QMainWindow):
 
     def crearUsuario(self):
         if(self.usuario.text != "" or self.contra.text != "" or self.confirm_contra.text != ""):
+            usuario = str("'"+self.usuario.text+"'")
             user = self.usuario.text
             passw = self.contra.text
             conf_passw = self.confirm_contra.text
-            if(passw == conf_passw):
-                self.datosTotal.inserta_usuario(user, passw)
-                self.usuario.clear()
-                self.contra.clear()
-                self.confirm_contra.clear()
-                print("¡Usuario Creado!")
-                QMessageBox.information(self, "Crear usuario", "¡Usuario Creado!")
+            usuario_DB = self.datosTotal.getUser(usuario)
+            if(user != usuario_DB):
+                if(passw == conf_passw):
+                    self.datosTotal.inserta_usuario(user, passw)
+                    self.usuario.clear()
+                    self.contra.clear()
+                    self.confirm_contra.clear()
+                    print("¡Usuario Creado!")
+                    QMessageBox.information(self, "Crear usuario", "¡Usuario Creado!")
+                else:
+                    print("Contraseñas no son iguales.")
+                    QMessageBox.warning(self, "Crear usuario", "Contraseñas no son iguales.")
             else:
-                print("Contraseñas no son iguales.")
-                QMessageBox.warning(self, "Crear usuario", "Contraseñas no son iguales.")
+                print("Usuario no disponible")
+                QMessageBox.warning(self, "Crear usuario", "Usuario no disponible, ingrese otro usuario.")
         else:
             print("Escribir datos del usuario.")
             QMessageBox.warning(self, "Crear usuario", "Escribir datos del usuario.")
