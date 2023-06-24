@@ -181,12 +181,15 @@ class Registro_datos():
     def importCSV(self, ruta_de_csv):
         data = pd.read_csv(f"{ruta_de_csv}", sep=";")   
         df = pd.DataFrame(data)
-        
         cursor = self.conexion.cursor()
-        #print(df.head())
-        #print(df.columns)
         for row in df.itertuples():
-            print(row[1])
+            tot_prod_ven = self.get_total_productos_vendidos(row.FECHA)
+            if(tot_prod_ven==""):
+                tot_prod_ven = 0
+                total_prod_vendidos = int(tot_prod_ven) + int(row.CANT_TOTAL_PRODUCTOS_VENDIDOS)
+            else:
+                total_prod_vendidos = int(tot_prod_ven) + int(row.CANT_TOTAL_PRODUCTOS_VENDIDOS)
+
             cursor.execute('''
                 INSERT INTO dbo.Ventas(DNI_cliente, Cant_Total_Productos_Vendidos, Dia, Mes, Anio, Total_Prod_Vendidos, Fecha)
                 VALUES(?, ?, ?, ?, ?, ?, ?)''',
@@ -195,7 +198,7 @@ class Registro_datos():
                 row.DIA, 
                 row.MES, 
                 row.ANIO, 
-                row.TOTAL_PROD_VENDIDOS, 
+                total_prod_vendidos, 
                 row.FECHA
             )
         print("CVS importado!")
