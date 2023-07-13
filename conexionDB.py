@@ -247,7 +247,11 @@ class Registro_datos():
     #Generar dataset
     def generar_dataset(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT Fecha, max(Total_Prod_Vendidos) as 'Total_Prod_Vendidos' FROM dbo.Ventas GROUP BY Fecha ORDER BY Fecha" 
+        #sql = "SELECT Fecha, max(Total_Prod_Vendidos) as 'Total_Prod_Vendidos' FROM dbo.Ventas GROUP BY Fecha ORDER BY Fecha"
+        sql = """SELECT CONCAT(Anio, '-', Mes, '-', Dia) as Fechaa, Cant_Total_Productos_Vendidos,
+            (SELECT MAX(Total_Prod_Vendidos) FROM Ventas v2 WHERE v2.Anio = Ventas.Anio AND v2.Mes = Ventas.Mes) as 'Total_Prod_Vendidos',
+            Mes, Dia, Anio
+            FROM Ventas"""
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro

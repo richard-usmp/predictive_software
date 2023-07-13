@@ -13,6 +13,8 @@ import sys
 from PySide6.QtWidgets import QApplication, QMessageBox
 from conexionDB import *
 
+admin = 'Administrador'
+
 class predictive_software:
     def __init__(self):
         #base de datos
@@ -89,7 +91,7 @@ class predictive_software:
     def logearse(self):
         if(self.login.signalLogin):
             self.login.hide()
-            if(self.login.getUsuario() == "user_prueba"):
+            if(self.login.getUsuario() == "user_prueba" or self.login.getUsuario() == admin):
                 self.main_admin.show()
                 self.main_admin.setup_name_user(self.login.getUsuario())
             else:
@@ -105,7 +107,7 @@ class predictive_software:
         self.modulo_recursos.hide()
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
-        if(self.login.getUsuario() == "user_prueba"):
+        if(self.login.getUsuario() == "user_prueba" or self.login.getUsuario() == admin):
             self.main.hide()
             self.main_admin.show()
             self.main_admin.setup_name_user(self.login.getUsuario())
@@ -168,7 +170,7 @@ class predictive_software:
         self.modulo_ventas.hide()
         self.modulo_consultas_SQ.hide()
         self.main_admin.hide()
-        if(self.login.getUsuario() == "user_prueba"):
+        if(self.login.getUsuario() == "user_prueba" or self.login.getUsuario() == admin):
             self.modulo_consultas_SQ.show()
         else:
             QMessageBox.warning(self.main, "Error", "No eres administrador.")

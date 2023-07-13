@@ -162,12 +162,9 @@ class Window_consultas_SQ(QMainWindow):
         Año_y_mes = str(Anio + "-" + Mes)
         filename = 'Dataset/dataset' + '_' + Año_y_mes + '.xlsx'
         dataset = self.datosTotal.generar_dataset()
-        data_list = [[item[0], item[1]] for item in dataset] #formato correcto para exportar a excel
-        data_list = sorted(data_list, key=lambda x: datetime.strptime(x[0], '%Y-%m')) # Ordenamiento correcto
-        data_list = [[f"{date.split('-')[0]}-{date.split('-')[1].zfill(2)}", value] for date, value in data_list] #Formato correcto para el modelo de prediccion
-        df = pd.DataFrame(data_list, columns=["Month", "TOTAL_PROD_VENDIDOS"])
+        data_list = [[datetime.strptime(item[0], "%Y-%m-%d").strftime("%Y-%m-%d"), item[1], item[2], item[3], item[4], item[5]] for item in dataset]
+        df = pd.DataFrame(data_list, columns=["Fechaa", "Cant_Total_Productos_Vendidos", "Total_Prod_Vendidos", "Mes", "Dia", "Anio"])
         df.to_excel(filename, index=False)
-        print(data_list)
         QMessageBox.information(self, "Excel", f"Se generó un excel con el dataset en {filename}")
 
     def rest_api(self):
@@ -176,10 +173,11 @@ class Window_consultas_SQ(QMainWindow):
             mes_ = self.fecha.currentIndex + 1
             cantidad_ventas_mes = self.cant_venta_mes_pasado.text
             QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
-            r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
+            #r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
+            r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes': mes_, 'ventas': cantidad_ventas_mes})
             json_texto = r.text
             jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
-            prediccion_ventas = jsondecoded["yhat_upper"]
+            prediccion_ventas = jsondecoded["yhat"]
             print(prediccion_ventas)
             q_aluminio = round(5 * prediccion_ventas)
             q_pernos_de_aluminio = round(2.71 * prediccion_ventas)
