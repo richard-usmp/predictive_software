@@ -134,7 +134,7 @@ class Registro_datos():
     #ventas
     def buscar_ventas(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT ID_Venta,DNI_cliente,Cant_Total_Productos_Vendidos,Dia,Mes,Anio FROM dbo.Ventas" 
+        sql = "SELECT ID_Venta,DNI_cliente,Cant_Total_Productos_Vendidos,Dia,Mes,Anio,Producto FROM dbo.Ventas" 
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro

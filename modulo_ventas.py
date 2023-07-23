@@ -112,7 +112,7 @@ class Window_ventas(QMainWindow):
         self.tabla.alternatingRowColors=True
         self.tabla.columnCount= 6
         self.tabla.rowCount = 0
-        nombreColumnas = ("Id", "Cod. venta", "Cantidad Productos Vendidos", "Día", "Mes", "Año")
+        nombreColumnas = ("Id", "Cod. venta", "Cantidad Productos Vendidos","Día", "Mes", "Año", "Producto")
         self.tabla.setHorizontalHeaderLabels(nombreColumnas)
         for indice, ancho in enumerate((80, 120, 120, 110, 150), start=0):
             self.tabla.setColumnWidth(indice, ancho)
@@ -170,6 +170,7 @@ class Window_ventas(QMainWindow):
             self.tabla.setItem(row, 3, QTableWidgetItem(str(endian[3])))
             self.tabla.setItem(row, 4, QTableWidgetItem(str(endian[4])))
             self.tabla.setItem(row, 5, QTableWidgetItem(str(endian[5])))
+            self.tabla.setItem(row, 6, QTableWidgetItem(str(endian[6])))
 
             row += 1
     

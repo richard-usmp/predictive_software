@@ -117,16 +117,22 @@ class Window_consultas_SQ(QMainWindow):
         self.fecha.styleSheet = "color: gray; font-size: 15px;"
         self.fecha.addItems(["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"])
 
+        self.producto = QComboBox(self.fr_contenedor_arriba)
+        self.producto.placeholderText= "Producto"
+        self.producto.geometry = QRect(10,450, 395,20)
+        self.producto.styleSheet = "color: gray; font-size: 15px;"
+        self.producto.addItems(['Cisternas de Combustible ', 'Cisternas de Ácidos ', 'Cisternas de Agua ', 'Tolvas Volquetes ', 'Semirremolques ', 'Remolques ', 'Cisternas de lacteos ', 'Cisternas de GLP ', 'Baranda de madera'])
+
         self.cant_venta_mes_pasado = QLineEdit(self.fr_contenedor_arriba)
         self.cant_venta_mes_pasado.placeholderText= "Ingrese cantidad de venta del mes seleccionado..."
-        self.cant_venta_mes_pasado.geometry = QRect(10,450, 395,20)
+        self.cant_venta_mes_pasado.geometry = QRect(10,500, 395,20)
         self.cant_venta_mes_pasado.alignment = Qt.AlignCenter
         self.cant_venta_mes_pasado.styleSheet = "color: gray; font-size: 15px;"
 
         self.boton_analisis_predictivos = QPushButton(self.fr_contenedor_arriba)
         self.boton_analisis_predictivos.text = "Análisis predictivo"
         self.boton_analisis_predictivos.clicked.connect(self.rest_api)
-        self.boton_analisis_predictivos.geometry = QRect(10, 490, 200,45)
+        self.boton_analisis_predictivos.geometry = QRect(10, 540, 200,45)
         self.boton_analisis_predictivos.styleSheet = "background: white; font-size: 15px;"
 
     def datosTabla(self):
@@ -168,13 +174,13 @@ class Window_consultas_SQ(QMainWindow):
         QMessageBox.information(self, "Excel", f"Se generó un excel con el dataset en {filename}")
 
     def rest_api(self):
-        if(self.fecha.currentIndex!=-1 or self.cant_venta_mes_pasado.text!=""):
+        if(self.producto.currentIndex!=-1 or self.fecha.currentIndex!=-1 or self.cant_venta_mes_pasado.text!=""):
             anio = today.strftime("%Y")
             mes_ = self.fecha.currentIndex + 1
             cantidad_ventas_mes = self.cant_venta_mes_pasado.text
+            producto = self.producto.currentText
             QMessageBox.information(self, "Predicción...", f"La predicción se realizará para el mes de {self.fecha.currentText}.")
-            #r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes':mes_})
-            r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes': mes_, 'ventas': cantidad_ventas_mes})
+            r = requests.post('https://api-tesis-usmp.herokuapp.com/prophetv3', json={'mes': mes_, 'ventas': cantidad_ventas_mes, 'producto': producto})
             json_texto = r.text
             jsondecoded = json.loads(json_texto[1:len(json_texto)-2])#quitar corchetes inicio y final
             prediccion_ventas = jsondecoded["yhat"]
@@ -217,7 +223,7 @@ class Window_consultas_SQ(QMainWindow):
 
 
             #PDF
-            ruta_template = 'D:/Ricardo/Documents/predictive_software/template.html'
+            ruta_template = 'D:/Ricardo/Documentos/predictive_software/template.html'
             info = {"mes":self.fecha.currentText, "prediccion_ventas": math.floor(prediccion_ventas) , "q_aluminio": q_aluminio, "q_pernos_aluminio": q_pernos_de_aluminio, "q_combustible": q_combustible, 
                     "q_pasta_para_metales_dura": q_pasta_para_metales_dura, "q_pasta_para_metales_suave": q_pasta_para_metales_suave, "q_pintura_metalica": q_pintura_metalica, "q_lija_para_metales_n80": q_lija_para_metales_n80, 
                     "q_lija_para_metales_n180": q_lija_para_metales_n180, "q_disco_corte_abl": q_disco_de_corte_abl, "q_trapo_metales_para_pulir": q_trapo_de_metales_para_pulir, "q_petroleo": q_petroleo, 
