@@ -139,10 +139,10 @@ class Registro_datos():
         registro = cursor.fetchall()
         return registro
 
-    def inserta_ventas(self, dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha):
+    def inserta_ventas(self, dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha, producto):
         cur = self.conexion.cursor()
         sql='''INSERT INTO dbo.Ventas
-        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha)
+        VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')'''.format(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, fecha, producto)
         cur.execute(sql)
         self.conexion.commit()    
         cur.close()
@@ -191,22 +191,26 @@ class Registro_datos():
                 total_prod_vendidos = int(tot_prod_ven) + int(row.CANT_TOTAL_PRODUCTOS_VENDIDOS)
 
             cursor.execute('''
-                INSERT INTO dbo.Ventas(DNI_cliente, Cant_Total_Productos_Vendidos, Dia, Mes, Anio, Total_Prod_Vendidos, Fecha)
-                VALUES(?, ?, ?, ?, ?, ?, ?)''',
+                INSERT INTO dbo.Ventas(DNI_cliente, Cant_Total_Productos_Vendidos, Dia, Mes, Anio, Total_Prod_Vendidos, Fecha, Producto)
+                VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
                 row.COD_VENTA, 
                 row.CANT_TOTAL_PRODUCTOS_VENDIDOS, 
                 row.DIA, 
                 row.MES, 
                 row.ANIO, 
                 total_prod_vendidos, 
-                row.FECHA
+                row.FECHA,
+                row.PRODUCTO
             )
         print("CVS importado!")
         self.conexion.commit()
 
     def buscar_dataset(self):
         cursor = self.conexion.cursor()
-        sql = "SELECT ID_Venta, Fecha, Total_Prod_Vendidos FROM dbo.Ventas" 
+        sql = """SELECT CONCAT(Anio, '-', Mes, '-', Dia) as Fechaa, Cant_Total_Productos_Vendidos,
+            (SELECT MAX(Total_Prod_Vendidos) FROM Ventas v2 WHERE v2.Anio = Ventas.Anio AND v2.Mes = Ventas.Mes) as 'Total_Prod_Vendidos',
+            Mes, Dia, Anio, Producto
+            FROM Ventas"""
         cursor.execute(sql)
         registro = cursor.fetchall()
         return registro
@@ -250,7 +254,7 @@ class Registro_datos():
         #sql = "SELECT Fecha, max(Total_Prod_Vendidos) as 'Total_Prod_Vendidos' FROM dbo.Ventas GROUP BY Fecha ORDER BY Fecha"
         sql = """SELECT CONCAT(Anio, '-', Mes, '-', Dia) as Fechaa, Cant_Total_Productos_Vendidos,
             (SELECT MAX(Total_Prod_Vendidos) FROM Ventas v2 WHERE v2.Anio = Ventas.Anio AND v2.Mes = Ventas.Mes) as 'Total_Prod_Vendidos',
-            Mes, Dia, Anio
+            Mes, Dia, Anio, Producto
             FROM Ventas"""
         cursor.execute(sql)
         registro = cursor.fetchall()

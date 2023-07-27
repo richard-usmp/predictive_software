@@ -110,7 +110,7 @@ class Window_ventas(QMainWindow):
         self.tabla.wordWrap=False
         self.tabla.isSortingEnabled=False
         self.tabla.alternatingRowColors=True
-        self.tabla.columnCount= 6
+        self.tabla.columnCount= 7
         self.tabla.rowCount = 0
         nombreColumnas = ("Id", "Cod. venta", "Cantidad Productos Vendidos","Día", "Mes", "Año", "Producto")
         self.tabla.setHorizontalHeaderLabels(nombreColumnas)
@@ -146,8 +146,8 @@ class Window_ventas(QMainWindow):
         fecha = str(anio + "-" + mes + "-" + dia)
         filename = 'Reportes/ventas' + '_' + fecha + '.xlsx'
         data_list = self.datosTotal.buscar_ventas()
-        data_list = [[item[0], item[1], item[2], item[3], item[4], item[5]] for item in data_list]
-        df = pd.DataFrame(data_list, columns=["Id", "Cod. venta", "Cantidad Productos Vendidos", "Día", "Mes", "Año"])
+        data_list = [[item[0], item[1], item[2], item[3], item[4], item[5], item[6]] for item in data_list]
+        df = pd.DataFrame(data_list, columns=["Id", "Cod. venta", "Cantidad Productos Vendidos", "Día", "Mes", "Año", "Producto"])
         df.to_excel(filename, index=False)
         QMessageBox.information(self, "Excel", f"Se generó un excel con las ventas en {filename}")
 
@@ -192,7 +192,7 @@ class Window_ventas(QMainWindow):
             else:
                 total_prod_vendidos = int(tot_prod_ven) + int(cantidad)
 
-            self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, Año_y_mes)
+            self.datosTotal.inserta_ventas(dni, cantidad, Dia, Mes, Anio, total_prod_vendidos, Año_y_mes, producto)
             print("Venta insertada!")
             QMessageBox.information(self, "Insertar Ventas", "Venta insertada!")
             self.input_cod_venta.clear()
